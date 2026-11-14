@@ -1,0 +1,4304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MUA · Estudio de Belleza — Gaby Mua Makeup</title>
+  <meta name="description" content="Estudio de belleza en Pimentel, Provincia Duarte. Maquillaje, novias, salón, uñas, faciales, láser y una tienda curada de belleza. Reserva tu cita en línea." />
+  <meta name="theme-color" content="#0b0b0b" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230b0b0b'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='32' fill='white' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+/* ============================================================
+   MUA · Estudio de Belleza
+   Sistema visual: editorial, monocromo, tipografía de alto contraste
+   ============================================================ */
+
+/* ---------- 1. Reset / variables ---------- */
+:root {
+  --ink: #0b0b0b;
+  --ink-soft: #171717;
+  --paper: #ffffff;
+  --bone: #f4f2ee;
+  --bone-2: #e8e5df;
+  --muted: #686868;
+  --line: rgba(11, 11, 11, 0.14);
+  --line-soft: rgba(11, 11, 11, 0.08);
+  --line-light: rgba(255, 255, 255, 0.16);
+  --white: #ffffff;
+  --error: #b42318;
+  --ff-display: "Bodoni Moda", "Times New Roman", Georgia, serif;
+  --ff-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --pad: clamp(20px, 5vw, 64px);
+  --header-h: 76px;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+[hidden] { display: none !important; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 18px);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--ff-sans);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--paper);
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body.is-locked { overflow: hidden; }
+
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button, input, textarea, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+h1, h2, h3, h4, p, figure, blockquote, ul, ol { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+
+::selection { background: var(--ink); color: var(--white); }
+
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+::placeholder { color: #9c9a95; opacity: 1; }
+
+/* scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bone); }
+::-webkit-scrollbar-thumb { background: #1c1c1c; border: 2px solid var(--bone); }
+
+/* ---------- 2. Utilidades ---------- */
+.wrap {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.section {
+  position: relative;
+  padding: clamp(76px, 9vw, 140px) var(--pad);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 10px; left: 10px;
+  z-index: 999;
+  padding: 10px 16px;
+  background: var(--ink);
+  color: var(--white);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  transform: translateY(-160%);
+  transition: transform 0.3s var(--ease);
+}
+.skip-link:focus { transform: none; }
+
+.img-fallback { background: linear-gradient(135deg, #e9e6e0, #f8f7f4); }
+.img-fallback::before {
+  content: "MUA";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--ff-display);
+  font-size: clamp(1.4rem, 3vw, 2.4rem);
+  letter-spacing: 0.24em;
+  color: rgba(11, 11, 11, 0.26);
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 250;
+  pointer-events: none;
+  opacity: 0.038;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  z-index: 300;
+  pointer-events: none;
+}
+.scroll-progress span {
+  display: block;
+  height: 100%;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+/* ---------- 3. Tipografía de apoyo / botones ---------- */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.66rem;
+  font-weight: 500;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: var(--muted);
+}
+.eyebrow .line { width: 36px; height: 1px; background: currentColor; flex: none; }
+.eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex: none; }
+
+h1, h2, h3 { font-family: var(--ff-display); font-weight: 500; }
+h2 em, h1 em, h3 em { font-style: italic; font-weight: 400; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 13px 24px;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--white);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.35s var(--ease), color 0.35s var(--ease), transform 0.35s var(--ease);
+}
+.btn svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  flex: none;
+  transition: transform 0.35s var(--ease);
+}
+.btn:hover { background: transparent; color: var(--ink); }
+.btn:hover svg { transform: translateX(4px); }
+.btn:active { transform: translateY(1px); }
+
+.btn--ghost { background: transparent; color: var(--ink); border-color: var(--ink); }
+.btn--ghost:hover { background: var(--ink); color: var(--white); }
+
+.btn--light { background: var(--white); border-color: var(--white); color: var(--ink); }
+.btn--light:hover { background: transparent; color: var(--white); }
+
+.btn--ghost-light { background: transparent; border-color: rgba(255, 255, 255, 0.4); color: var(--white); }
+.btn--ghost-light:hover { background: var(--white); border-color: var(--white); color: var(--ink); }
+
+.btn--full { width: 100%; }
+
+.link-btn {
+  display: inline-block;
+  padding: 0 0 4px;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  background: none;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: currentColor;
+  transition: opacity 0.3s var(--ease);
+}
+.link-btn:hover { opacity: 0.55; }
+
+/* ---------- 4. Header ---------- */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 16px var(--pad);
+  border-bottom: 1px solid transparent;
+  transition: background 0.4s var(--ease), padding 0.4s var(--ease), border-color 0.4s var(--ease), color 0.3s;
+}
+.site-header.is-scrolled {
+  background: rgba(255, 255, 255, 0.94);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-color: var(--line);
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  text-decoration: none;
+  flex: none;
+}
+.brand__mark {
+  font-family: var(--ff-display);
+  font-size: 1.85rem;
+  font-weight: 700;
+  letter-spacing: -0.06em;
+}
+.brand__sub {
+  margin-top: 3px;
+  font-size: 0.5rem;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+.brand--light { color: var(--white); }
+.brand--light .brand__sub { color: rgba(255, 255, 255, 0.55); }
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(18px, 2.4vw, 34px);
+}
+.main-nav a {
+  position: relative;
+  padding: 4px 0;
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.main-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 0.4s var(--ease);
+}
+.main-nav a:hover::after { transform: scaleX(1); }
+
+.header-actions { display: flex; align-items: center; gap: 14px; }
+
+.header-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.64rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.header-wa svg {
+  width: 14px; height: 14px;
+  fill: none; stroke: currentColor; stroke-width: 1.6;
+}
+.header-wa:hover { opacity: 0.55; }
+
+.cart-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 40px;
+  padding: 8px 13px;
+  border: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: background 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s;
+}
+.cart-btn:hover { background: var(--ink); color: var(--white); }
+.cart-btn:hover .cart-count { background: var(--white); color: var(--ink); }
+
+.cart-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  background: var(--ink);
+  color: var(--white);
+  font-size: 0.58rem;
+  font-weight: 600;
+  line-height: 1;
+  transition: background 0.3s, color 0.3s, transform 0.3s var(--ease);
+}
+.cart-count.bump { animation: bump 0.45s var(--ease); }
+
+@keyframes bump {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
+.burger {
+  display: none;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+}
+.burger span {
+  position: absolute;
+  left: 11px; right: 11px;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 0.35s var(--ease), top 0.35s var(--ease);
+}
+.burger span:first-child { top: 15px; }
+.burger span:last-child { top: 23px; }
+.burger.is-open span:first-child { top: 19px; transform: rotate(45deg); }
+.burger.is-open span:last-child { top: 19px; transform: rotate(-45deg); }
+
+.site-header.is-menu-open { color: var(--white); border-color: transparent; background: transparent; }
+.site-header.is-menu-open .cart-btn { border-color: var(--white); color: var(--white); }
+.site-header.is-menu-open .cart-btn:hover { background: var(--white); color: var(--ink); }
+.site-header.is-menu-open .cart-count { background: var(--white); color: var(--ink); }
+
+/* ---------- 5. Mobile menu ---------- */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: calc(var(--header-h) + 26px) var(--pad) 34px;
+  background: var(--ink);
+  color: var(--white);
+  transform: translateY(-101%);
+  visibility: hidden;
+  transition: transform 0.6s var(--ease), visibility 0.6s;
+  overflow-y: auto;
+}
+.mobile-menu.is-open { transform: none; visibility: visible; }
+
+.mobile-menu nav { display: flex; flex-direction: column; }
+.mobile-menu nav a {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line-light);
+  font-family: var(--ff-display);
+  font-size: clamp(2rem, 8.5vw, 3.2rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+}
+.mobile-menu.is-open nav a { opacity: 1; transform: none; }
+.mobile-menu.is-open nav a:nth-child(1) { transition-delay: 0.1s; }
+.mobile-menu.is-open nav a:nth-child(2) { transition-delay: 0.15s; }
+.mobile-menu.is-open nav a:nth-child(3) { transition-delay: 0.2s; }
+.mobile-menu.is-open nav a:nth-child(4) { transition-delay: 0.25s; }
+.mobile-menu.is-open nav a:nth-child(5) { transition-delay: 0.3s; }
+.mobile-menu.is-open nav a:nth-child(6) { transition-delay: 0.35s; }
+.mobile-menu nav a span {
+  font-family: var(--ff-sans);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.6);
+}
+.mobile-menu nav a:hover { font-style: italic; }
+
+.mobile-menu__foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 26px;
+  padding-top: 30px;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.7);
+}
+.mobile-menu__foot a { text-decoration: underline; text-underline-offset: 4px; }
+.mobile-menu__foot p { width: 100%; margin-top: 6px; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.18em; color: rgba(255, 255, 255, 0.6); }
+
+/* ---------- 6. Hero ---------- */
+.hero {
+  position: relative;
+  overflow: clip;
+  padding: clamp(118px, 15vh, 176px) var(--pad) clamp(52px, 7vw, 96px);
+}
+
+.hero-ghost {
+  position: absolute;
+  left: 50%;
+  bottom: -3.5vw;
+  z-index: 0;
+  transform: translateX(-50%);
+  font-family: var(--ff-display);
+  font-size: 25vw;
+  font-weight: 700;
+  line-height: 0.7;
+  letter-spacing: -0.05em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(11, 11, 11, 0.09);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  align-items: end;
+  gap: clamp(32px, 6vw, 88px);
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.hero-title {
+  margin-top: 22px;
+  font-size: clamp(3rem, 7vw, 6.4rem);
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+}
+.hero-title em { display: inline-block; font-weight: 400; }
+
+.hero-lede {
+  max-width: 33rem;
+  margin-top: 26px;
+  color: var(--muted);
+  font-size: clamp(0.92rem, 1.1vw, 1.02rem);
+  line-height: 1.7;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 32px;
+}
+
+.hero-meta {
+  display: flex;
+  gap: clamp(22px, 4vw, 54px);
+  margin-top: 42px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.hero-meta div { display: flex; flex-direction: column; gap: 2px; }
+.hero-meta strong { font-family: var(--ff-display); font-size: clamp(1.3rem, 2vw, 1.7rem); font-weight: 500; line-height: 1; }
+.hero-meta span { font-size: 0.56rem; letter-spacing: 0.17em; text-transform: uppercase; color: var(--muted); }
+
+.hero-media {
+  position: relative;
+  justify-self: end;
+  width: 100%;
+  max-width: 540px;
+  margin-bottom: 8px;
+}
+.hero-media::before {
+  content: "";
+  position: absolute;
+  inset: 20px -20px -20px 20px;
+  background: var(--ink);
+  z-index: 0;
+}
+
+.hero-frame {
+  position: relative;
+  z-index: 1;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 1px solid var(--ink);
+  background: var(--bone);
+}
+.hero-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.06);
+  transition: transform 1.3s var(--ease);
+}
+.hero-media:hover .hero-frame img { transform: scale(1.035); }
+
+.hero-frame__tag {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 5px 9px;
+  background: var(--ink);
+  color: var(--white);
+  font-size: 0.52rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.hero-badge {
+  position: absolute;
+  z-index: 3;
+  top: -36px;
+  left: -36px;
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--white);
+  animation: spin 22s linear infinite;
+}
+.hero-badge svg { width: 100%; height: 100%; padding: 10px; }
+.hero-badge text {
+  fill: rgba(255, 255, 255, 0.85);
+  font-family: var(--ff-sans);
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.hero-badge > span {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 0.95rem;
+  animation: spin 22s linear infinite reverse;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.hero-avail {
+  position: absolute;
+  z-index: 2;
+  left: 16px;
+  bottom: 16px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 9px;
+  align-items: center;
+  padding: 10px 16px 10px 34px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid var(--ink);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.hero-avail__label {
+  grid-column: 2;
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.hero-avail strong {
+  grid-column: 2;
+  font-family: var(--ff-display);
+  font-size: 0.98rem;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.hero-avail .pulse {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  margin-top: -3.5px;
+  border-radius: 50%;
+  background: var(--ink);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.8); }
+}
+
+.hero-side {
+  position: absolute;
+  z-index: 2;
+  top: 42%;
+  right: -46px;
+  transform: rotate(90deg);
+  transform-origin: center;
+  font-size: 0.5rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ---------- 7. Ticker ---------- */
+.ticker {
+  overflow: hidden;
+  padding: 15px 0;
+  background: var(--ink);
+  color: var(--white);
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+.ticker__track {
+  display: flex;
+  width: max-content;
+  animation: ticker 34s linear infinite;
+  will-change: transform;
+}
+.ticker:hover .ticker__track { animation-play-state: paused; }
+.ticker__group {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  font-size: 0.64rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+.ticker__group i {
+  margin: 0 28px;
+  font-style: normal;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+@keyframes ticker { to { transform: translateX(-50%); } }
+
+/* ---------- 8. Section heads ---------- */
+.section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.52fr);
+  align-items: end;
+  gap: clamp(20px, 5vw, 80px);
+}
+.section-head h2 {
+  margin-top: 16px;
+  font-size: clamp(2.4rem, 5vw, 4.6rem);
+  line-height: 0.94;
+  letter-spacing: -0.035em;
+}
+.section-lede {
+  max-width: 31rem;
+  padding-bottom: 6px;
+  font-size: 0.88rem;
+  line-height: 1.75;
+  color: var(--muted);
+}
+.section-head--gallery { align-items: center; }
+.section-head--gallery .btn { justify-self: end; }
+
+/* ---------- 9. Servicios ---------- */
+.services { background: var(--paper); }
+
+.services-list { margin-top: clamp(34px, 4vw, 56px); border-top: 1px solid var(--ink); }
+
+.service-row {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1.6fr) 90px 150px 44px;
+  align-items: center;
+  gap: 20px;
+  padding: 24px 14px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  transition: background 0.4s var(--ease), color 0.4s var(--ease), padding 0.4s var(--ease);
+}
+.service-num {
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--muted);
+  transition: color 0.4s;
+}
+.service-main { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.service-name {
+  font-family: var(--ff-display);
+  font-size: clamp(1.3rem, 2.1vw, 1.8rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+.service-desc { font-size: 0.72rem; color: var(--muted); transition: color 0.4s; }
+.service-duration {
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 0.4s;
+}
+.service-price {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-align: right;
+}
+.service-arrow {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  justify-self: end;
+  transition: background 0.4s var(--ease), color 0.4s var(--ease), border-color 0.4s, transform 0.4s var(--ease);
+}
+.service-arrow svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+
+.services-note {
+  margin-top: 24px;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+.services-note a { color: var(--ink); border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+.services-note a:hover { opacity: 0.55; }
+
+/* ---------- 10. Agenda ---------- */
+.booking {
+  background: var(--bone);
+  overflow: clip;
+}
+.booking::before {
+  content: "CITA";
+  position: absolute;
+  right: -2vw;
+  bottom: -4vw;
+  font-family: var(--ff-display);
+  font-size: 26vw;
+  font-weight: 700;
+  line-height: 0.7;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(11, 11, 11, 0.06);
+  pointer-events: none;
+}
+
+.booking-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  align-items: start;
+  gap: clamp(34px, 5vw, 80px);
+}
+
+.booking-copy { position: sticky; top: calc(var(--header-h) + 30px); }
+.booking-copy h2 {
+  margin-top: 16px;
+  font-size: clamp(2.6rem, 5vw, 4.8rem);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+}
+.booking-copy > p {
+  max-width: 27rem;
+  margin-top: 24px;
+  font-size: 0.88rem;
+  line-height: 1.75;
+  color: var(--muted);
+}
+.booking-perks {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 30px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  font-size: 0.78rem;
+}
+.booking-perks li { display: flex; gap: 10px; align-items: baseline; }
+.booking-perks span { font-size: 0.6rem; }
+
+.booking-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 34px;
+}
+.booking-contact .eyebrow { margin-bottom: 4px; }
+.booking-contact a {
+  font-family: var(--ff-display);
+  font-size: 1.55rem;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.booking-contact a:hover { font-style: italic; }
+.booking-contact p { margin-top: 4px; font-size: 0.72rem; line-height: 1.7; color: var(--muted); }
+
+.booking-card {
+  position: relative;
+  padding: clamp(20px, 3vw, 36px);
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  box-shadow: 10px 10px 0 var(--ink);
+}
+
+.booking-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.booking-top h3 { margin-top: 5px; font-size: clamp(1.35rem, 2vw, 1.65rem); font-weight: 500; line-height: 1.15; }
+.booking-status {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  font-size: 0.5rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.booking-status::before {
+  content: "";
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.booking-progress {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 18px 0 24px;
+}
+.booking-progress li {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding-top: 9px;
+  border-top: 1px solid var(--line);
+  font-size: 0.56rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6c6a66;
+  transition: color 0.3s, border-color 0.3s;
+}
+.booking-progress li span { font-family: var(--ff-display); font-style: italic; font-size: 0.8rem; letter-spacing: 0; }
+.booking-progress li.is-active,
+.booking-progress li.is-done { color: var(--ink); border-color: var(--ink); }
+.booking-progress li.is-done span::after { content: " ✓"; font-family: var(--ff-sans); font-style: normal; font-size: 0.55rem; }
+
+.bstep__title {
+  margin-bottom: 12px;
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.service-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.service-opt {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  text-align: left;
+  transition: background 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s, transform 0.25s var(--ease);
+}
+.service-opt:hover { border-color: var(--ink); transform: translateY(-1px); }
+.service-opt .so-name { font-size: 0.8rem; font-weight: 600; line-height: 1.25; }
+.service-opt .so-meta { font-size: 0.63rem; line-height: 1.4; color: var(--muted); }
+.service-opt.is-selected { background: var(--ink); border-color: var(--ink); color: var(--white); }
+.service-opt.is-selected .so-meta { color: rgba(255, 255, 255, 0.6); }
+
+.hint {
+  margin-top: 12px;
+  font-size: 0.7rem;
+  color: var(--error);
+}
+.hint::before { content: "↑ "; }
+
+/* calendario */
+.cal {
+  margin-top: 4px;
+  padding: 14px;
+  border: 1px solid var(--line);
+}
+.cal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.cal-head > span {
+  font-family: var(--ff-display);
+  font-size: 1.05rem;
+  line-height: 1.2;
+  text-align: center;
+  text-transform: capitalize;
+}
+.cal-head button {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--line);
+  background: transparent;
+  transition: background 0.25s, color 0.25s, border-color 0.25s;
+}
+.cal-head button svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+.cal-head button:hover:not(:disabled) { background: var(--ink); border-color: var(--ink); color: var(--white); }
+.cal-head button:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.cal-week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 4px;
+  font-size: 0.54rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  text-align: center;
+}
+.cal-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+.cal-day {
+  position: relative;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: 0.76rem;
+  line-height: 1;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.cal-day:hover:not(:disabled):not(.is-selected) { border-color: var(--ink); }
+.cal-day.is-today::after {
+  content: "";
+  position: absolute;
+  bottom: 5px;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.cal-day.is-selected { background: var(--ink); color: var(--white); border-color: var(--ink); }
+.cal-day.is-selected::after { background: var(--white); }
+.cal-day:disabled { color: rgba(11, 11, 11, 0.22); cursor: not-allowed; text-decoration: line-through; }
+
+.slots-wrap { margin-top: 20px; }
+.slots-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.slots-head .bstep__title { margin: 0; }
+.slots-head > span { font-size: 0.62rem; color: var(--muted); }
+.slots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+.slot {
+  padding: 9px 6px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.slot:hover:not(:disabled) { border-color: var(--ink); }
+.slot.is-selected { background: var(--ink); color: var(--white); border-color: var(--ink); }
+.slot:disabled {
+  background: var(--bone);
+  border-color: transparent;
+  color: rgba(11, 11, 11, 0.28);
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+.slots-empty {
+  grid-column: 1 / -1;
+  padding: 12px;
+  border: 1px dashed var(--line);
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* formulario */
+.fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 18px;
+}
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field--full { grid-column: 1 / -1; }
+.field > span {
+  font-size: 0.56rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+.field > span em { font-style: normal; font-weight: 400; color: var(--muted); text-transform: none; letter-spacing: 0; }
+.field input,
+.field textarea {
+  width: 100%;
+  padding: 9px 0;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  transition: border-color 0.25s;
+}
+.field textarea { resize: vertical; min-height: 58px; }
+.field input:focus,
+.field textarea:focus { outline: 0; border-bottom-color: var(--ink); border-bottom-width: 2px; padding-bottom: 8px; }
+.field.has-error input,
+.field.has-error textarea { border-bottom-color: var(--error); }
+.field-error { font-size: 0.63rem; color: var(--error); }
+
+.summary {
+  margin-top: 18px;
+  padding: 14px 16px;
+  background: var(--bone);
+  border-left: 3px solid var(--ink);
+}
+.summary > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 5px 0;
+  border-bottom: 1px dotted rgba(11, 11, 11, 0.12);
+  font-size: 0.72rem;
+}
+.summary > div:last-child { border-bottom: 0; }
+.summary span { color: var(--muted); }
+.summary b { font-weight: 500; text-align: right; }
+
+.form-note {
+  margin-top: 12px;
+  font-size: 0.62rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.booking-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 22px;
+}
+.booking-nav .btn { min-width: 132px; }
+#bkNext { margin-left: auto; }
+
+/* éxito */
+.booking-success { text-align: center; }
+.success-icon {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  margin: 4px auto 16px;
+  border: 1px solid var(--ink);
+  border-radius: 50%;
+}
+.success-icon svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.4; }
+.booking-success .eyebrow { justify-content: center; }
+.booking-success h3 {
+  margin-top: 8px;
+  font-size: clamp(1.9rem, 3vw, 2.4rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.booking-success > p {
+  max-width: 24rem;
+  margin: 10px auto 0;
+  font-size: 0.78rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+.success-code {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 20px 0 4px;
+  padding: 12px;
+  border: 1px dashed var(--line);
+}
+.success-code span { font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+.success-code b { font-family: var(--ff-display); font-size: 1.5rem; letter-spacing: 0.08em; font-weight: 500; }
+
+.success-details { margin: 14px 0 0; }
+.success-details > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 0.72rem;
+  text-align: left;
+}
+.success-details span { color: var(--muted); flex: none; }
+.success-details b { font-weight: 500; text-align: right; }
+
+.success-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 20px;
+}
+.success-actions .btn { width: 100%; }
+.booking-success .link-btn { margin-top: 16px; }
+
+/* ---------- 11. Tienda ---------- */
+.shop { background: var(--paper); }
+
+.shop-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px 24px;
+  margin: clamp(34px, 4vw, 52px) 0 34px;
+  padding: 13px 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--line);
+}
+.filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  padding: 7px 13px;
+  border: 1px solid var(--line);
+  background: transparent;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  transition: background 0.25s var(--ease), color 0.25s, border-color 0.25s;
+}
+.chip:hover { border-color: var(--ink); }
+.chip.is-active { background: var(--ink); border-color: var(--ink); color: var(--white); }
+.shop-count {
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.shop-count span { color: var(--ink); font-weight: 600; }
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+  row-gap: clamp(32px, 4vw, 48px);
+}
+
+.product {
+  position: relative;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  animation: cardIn 0.5s var(--ease) both;
+  animation-delay: calc(var(--i, 0) * 35ms);
+}
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+.product-media {
+  position: relative;
+  aspect-ratio: 1 / 1.12;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 25% 15%, #fbfaf8 0%, transparent 55%),
+    linear-gradient(155deg, #f6f4f0 0%, #e7e4dd 100%);
+}
+.product-media::before {
+  content: attr(data-letter);
+  position: absolute;
+  left: 6px;
+  bottom: -14%;
+  font-family: var(--ff-display);
+  font-size: 11rem;
+  font-weight: 700;
+  line-height: 0.7;
+  color: rgba(11, 11, 11, 0.055);
+  pointer-events: none;
+}
+.product-media::after {
+  content: "";
+  position: absolute;
+  inset: 13px;
+  border: 1px solid rgba(11, 11, 11, 0.07);
+  pointer-events: none;
+}
+
+.product-media .art-svg {
+  position: absolute;
+  left: 50%;
+  top: 51%;
+  z-index: 1;
+  width: 66%;
+  height: auto;
+  transform: translate(-50%, -50%);
+  transition: transform 0.7s var(--ease);
+  filter: drop-shadow(0 18px 18px rgba(11, 11, 11, 0.08));
+}
+
+.product-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 3;
+  padding: 4px 7px;
+  background: var(--ink);
+  color: var(--white);
+  font-size: 0.48rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.fav-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 33px;
+  height: 33px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.78);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  transition: border-color 0.25s, background 0.25s;
+}
+.fav-btn svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+.fav-btn:hover { border-color: var(--ink); background: var(--white); }
+.fav-btn.is-fav svg { fill: var(--ink); }
+.fav-btn.is-fav { border-color: var(--ink); }
+
+.product-info { padding-top: 11px; }
+.product-cat {
+  font-size: 0.52rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.product-name {
+  margin-top: 3px;
+  font-family: var(--ff-display);
+  font-size: clamp(1rem, 1.3vw, 1.18rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+.product-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 11px;
+  padding-top: 9px;
+  border-top: 1px solid var(--line);
+}
+.product-price { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.02em; }
+.p-add {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--white);
+  transition: background 0.25s var(--ease), color 0.25s, border-color 0.25s;
+}
+.p-add svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+.p-add:hover { background: transparent; color: var(--ink); }
+.p-add.is-added { background: var(--white); color: var(--ink); }
+
+.shop-foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 30px;
+  margin-top: 48px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+.shop-foot a { color: var(--ink); border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+.shop-foot a:hover { opacity: 0.55; }
+.shop-foot__note { font-size: 0.6rem; letter-spacing: 0.06em; text-transform: uppercase; }
+
+/* ---------- 12. Nosotras ---------- */
+.about {
+  background: var(--ink);
+  color: var(--white);
+  overflow: clip;
+}
+.about .eyebrow { color: rgba(255, 255, 255, 0.5); }
+
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(44px, 7vw, 100px);
+}
+
+.about-visual {
+  position: relative;
+  padding-bottom: 40px;
+  padding-right: 26px;
+}
+.about-img { position: relative; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.16); }
+.about-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.08);
+  transition: transform 1s var(--ease);
+}
+.about-img:hover img { transform: scale(1.03); }
+.about-img--main { width: 82%; aspect-ratio: 4 / 5; }
+.about-img--main figcaption {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  padding: 4px 8px;
+  background: var(--ink);
+  font-size: 0.5rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8);
+}
+.about-img--small {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 48%;
+  aspect-ratio: 1 / 1;
+  border: 7px solid var(--ink);
+}
+.about-stamp {
+  position: absolute;
+  top: -14px;
+  left: -12px;
+  z-index: 2;
+  padding: 6px 10px;
+  background: var(--white);
+  color: var(--ink);
+  font-size: 0.5rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transform: rotate(-3deg);
+}
+.about-vertical {
+  position: absolute;
+  right: -24px;
+  top: 36%;
+  transform: rotate(90deg);
+  font-size: 0.48rem;
+  letter-spacing: 0.28em;
+  color: rgba(255, 255, 255, 0.55);
+  white-space: nowrap;
+}
+
+.about-copy h2 {
+  margin-top: 16px;
+  font-size: clamp(2.6rem, 5vw, 4.6rem);
+  line-height: 0.94;
+  letter-spacing: -0.035em;
+}
+.about-copy > p {
+  max-width: 34rem;
+  margin-top: 20px;
+  font-size: 0.87rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.64);
+}
+.about-copy > p a { color: var(--white); text-decoration: underline; text-underline-offset: 3px; }
+
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 36px;
+  border-top: 1px solid var(--line-light);
+}
+.about-stats div {
+  padding: 18px 0 16px;
+  border-bottom: 1px solid var(--line-light);
+}
+.about-stats strong {
+  display: block;
+  font-family: var(--ff-display);
+  font-size: clamp(1.7rem, 2.5vw, 2.3rem);
+  font-weight: 500;
+  line-height: 1;
+}
+.about-stats span {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.52rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.about-sign {
+  margin-top: 24px;
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-size: 1.4rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.about .btn { margin-top: 26px; }
+
+/* ---------- 13. Galería ---------- */
+.gallery { background: var(--bone); }
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: clamp(170px, 19vw, 240px);
+  gap: 10px;
+  margin-top: clamp(34px, 4vw, 52px);
+}
+.g-item {
+  position: relative;
+  overflow: hidden;
+  background: var(--bone-2);
+}
+.g-item--large { grid-column: span 2; grid-row: span 2; }
+.g-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.05);
+  transition: transform 1.1s var(--ease);
+}
+.g-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(11, 11, 11, 0.62), transparent 55%);
+  pointer-events: none;
+}
+.g-item figcaption {
+  position: absolute;
+  z-index: 2;
+  left: 14px;
+  right: 14px;
+  bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  color: var(--white);
+}
+.g-item figcaption span {
+  font-size: 0.48rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+}
+.g-item figcaption b {
+  font-family: var(--ff-display);
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.g-quote {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  padding: clamp(20px, 2.5vw, 30px);
+  background: var(--ink);
+  color: var(--white);
+}
+.g-quote p {
+  font-family: var(--ff-display);
+  font-size: clamp(1.2rem, 2vw, 1.9rem);
+  font-style: italic;
+  line-height: 1.25;
+}
+.g-quote cite {
+  font-size: 0.54rem;
+  font-style: normal;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ---------- 14. Testimonios ---------- */
+.testimonials { background: var(--paper); }
+
+.testi-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr 1fr;
+  gap: 12px;
+  margin-top: clamp(34px, 4vw, 52px);
+}
+.testi {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: clamp(22px, 2.6vw, 32px);
+  border: 1px solid var(--line);
+  background: var(--paper);
+}
+.testi--featured { background: var(--ink); border-color: var(--ink); color: var(--white); }
+.stars { font-size: 0.78rem; letter-spacing: 0.24em; }
+.testi blockquote {
+  font-family: var(--ff-display);
+  font-size: clamp(1.02rem, 1.4vw, 1.18rem);
+  font-style: italic;
+  line-height: 1.55;
+}
+.testi figcaption { display: flex; flex-direction: column; gap: 2px; margin-top: auto; }
+.testi figcaption b { font-size: 0.78rem; font-weight: 600; }
+.testi figcaption span {
+  font-size: 0.52rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.testi--featured figcaption span { color: rgba(255, 255, 255, 0.5); }
+
+/* ---------- 15. Contacto / footer ---------- */
+.contact {
+  background: var(--ink);
+  color: var(--white);
+  padding-bottom: 0;
+}
+.contact .eyebrow { color: rgba(255, 255, 255, 0.5); }
+
+.contact-cta { padding-bottom: clamp(48px, 6vw, 76px); border-bottom: 1px solid var(--line-light); }
+.contact-cta h2 {
+  margin-top: 18px;
+  font-size: clamp(2.7rem, 6.4vw, 6rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+}
+.contact-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 30px;
+  padding: clamp(44px, 5vw, 64px) 0;
+  border-bottom: 1px solid var(--line-light);
+}
+.contact-col { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; font-size: 0.78rem; }
+.contact-col .eyebrow { margin-bottom: 6px; }
+.contact-col p { color: rgba(255, 255, 255, 0.66); line-height: 1.75; }
+.contact-col a { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+.contact-col a:hover { color: rgba(255, 255, 255, 0.6); }
+.contact-muted { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255, 255, 255, 0.58); }
+.socials { display: flex; gap: 14px; margin-top: 8px; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.14em; }
+
+.newsletter {
+  display: flex;
+  width: 100%;
+  margin-top: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+}
+.newsletter input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 0;
+  border: 0;
+  background: transparent;
+  color: var(--white);
+  font-size: 0.78rem;
+}
+.newsletter input::placeholder { color: rgba(255, 255, 255, 0.58); }
+.newsletter input:focus { outline: 0; }
+.newsletter button {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  border: 0;
+  background: transparent;
+  color: var(--white);
+}
+.newsletter button svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+.newsletter button:hover { transform: translateX(3px); }
+.contact-col--news small { margin-top: 8px; font-size: 0.56rem; line-height: 1.5; color: rgba(255, 255, 255, 0.58); }
+
+.footer { padding-top: 26px; }
+.footer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.footer-note {
+  font-size: 0.56rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: right;
+}
+.footer-word {
+  margin: 28px 0 10px;
+  font-family: var(--ff-display);
+  font-size: clamp(7rem, 38vw, 34rem);
+  font-weight: 700;
+  line-height: 0.69;
+  letter-spacing: -0.035em;
+  text-align: center;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.22);
+  user-select: none;
+  pointer-events: none;
+}
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+  padding: 20px 0 26px;
+  border-top: 1px solid var(--line-light);
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.6);
+}
+.back-top { text-transform: uppercase; letter-spacing: 0.14em; color: rgba(255, 255, 255, 0.75); }
+.back-top:hover { color: var(--white); }
+
+/* ---------- 16. Carrito ---------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 390;
+  background: rgba(8, 8, 8, 0.45);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s var(--ease), visibility 0.4s;
+}
+.overlay.is-open { opacity: 1; visibility: visible; }
+
+.cart {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 400;
+  display: flex;
+  flex-direction: column;
+  width: min(440px, 100%);
+  background: var(--paper);
+  border-left: 1px solid var(--ink);
+  transform: translateX(101%);
+  visibility: hidden;
+  transition: transform 0.55s var(--ease), visibility 0.55s;
+}
+.cart.is-open { transform: none; visibility: visible; }
+
+.cart-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 24px 18px;
+  border-bottom: 1px solid var(--ink);
+}
+.cart-head h2 { font-size: 1.65rem; font-weight: 500; line-height: 1; }
+.cart-head__count {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.55rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--line);
+  background: transparent;
+  transition: background 0.25s, color 0.25s, border-color 0.25s;
+}
+.icon-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+.icon-btn:hover { background: var(--ink); border-color: var(--ink); color: var(--white); }
+
+.cart-ship { padding: 13px 24px; border-bottom: 1px solid var(--line); }
+.cart-ship p { font-size: 0.64rem; letter-spacing: 0.04em; color: var(--muted); }
+.cart-ship strong { color: var(--ink); }
+.ship-bar { height: 3px; margin-top: 8px; background: var(--bone-2); overflow: hidden; }
+.ship-bar span { display: block; height: 100%; width: 0; background: var(--ink); transition: width 0.5s var(--ease); }
+
+.cart-items { flex: 1; overflow-y: auto; padding: 4px 24px; overscroll-behavior: contain; }
+
+.ci {
+  position: relative;
+  display: grid;
+  grid-template-columns: 62px minmax(0, 1fr);
+  grid-template-rows: auto auto auto;
+  gap: 4px 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+.ci-art {
+  grid-row: 1 / span 3;
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 78px;
+  background: linear-gradient(155deg, #f6f4f0, #e7e4dd);
+  overflow: hidden;
+}
+.ci-art svg { display: block; width: 74%; height: 82%; }
+.ci-name { padding-right: 34px; font-family: var(--ff-display); font-size: 1rem; font-weight: 500; line-height: 1.2; }
+.ci-meta {
+  grid-column: 2;
+  font-size: 0.52rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.ci-bottom {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 5px;
+}
+.ci-price { font-size: 0.76rem; font-weight: 600; }
+.ci-remove {
+  position: absolute;
+  top: 17px;
+  right: 0;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: none;
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.ci-remove:hover { color: var(--error); border-color: currentColor; }
+
+.qty {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--line);
+}
+.qty button {
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  transition: background 0.2s;
+}
+.qty button:hover { background: var(--bone); }
+.qty svg { width: 10px; height: 10px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+.qty span { min-width: 22px; font-size: 0.68rem; text-align: center; }
+
+.cart-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 100%;
+  padding: 40px 16px;
+  text-align: center;
+}
+.cart-empty svg { width: 44px; height: 44px; fill: none; stroke: currentColor; stroke-width: 1.1; }
+.cart-empty h3 { margin-top: 4px; font-size: 1.35rem; font-weight: 500; }
+.cart-empty p { max-width: 220px; font-size: 0.74rem; color: var(--muted); line-height: 1.6; }
+.cart-empty .btn { margin-top: 8px; }
+
+.cart-foot {
+  padding: 18px 24px 22px;
+  border-top: 1px solid var(--ink);
+  background: var(--bone);
+}
+.cart-total { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.cart-total span { font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+.cart-total b { font-family: var(--ff-display); font-size: 1.5rem; font-weight: 500; line-height: 1; }
+.cart-note { margin: 8px 0 14px; font-size: 0.62rem; line-height: 1.55; color: var(--muted); }
+.cart-foot .btn:disabled { opacity: 0.35; cursor: not-allowed; background: var(--ink); color: var(--white); }
+.cart-foot .link-btn { display: block; margin: 12px auto 0; }
+
+/* ---------- 17. Toast ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  z-index: 500;
+  max-width: min(92vw, 420px);
+  padding: 12px 20px;
+  background: var(--ink);
+  color: var(--white);
+  font-size: 0.72rem;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  text-align: center;
+  opacity: 0;
+  transform: translate(-50%, 16px);
+  pointer-events: none;
+  transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
+}
+.toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+
+/* ---------- 18. Reveal / movimiento ---------- */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.85s var(--ease), transform 0.85s var(--ease);
+  transition-delay: var(--d, 0s);
+}
+.js .reveal.is-in { opacity: 1; transform: none; }
+
+/* ---------- 19. Hover fino ---------- */
+@media (hover: hover) {
+  .service-row:hover {
+    background: var(--ink);
+    color: var(--white);
+    padding-left: 26px;
+    padding-right: 26px;
+  }
+  .service-row:hover .service-num,
+  .service-row:hover .service-desc,
+  .service-row:hover .service-duration { color: rgba(255, 255, 255, 0.55); }
+  .service-row:hover .service-arrow {
+    background: var(--white);
+    border-color: var(--white);
+    color: var(--ink);
+    transform: translateX(3px);
+  }
+  .product:hover .product-media .art-svg { transform: translate(-50%, -54%) rotate(-3deg) scale(1.04); }
+  .g-item:hover img { transform: scale(1.045); }
+}
+
+/* ---------- 20. Responsive ---------- */
+@media (max-width: 1200px) {
+  .product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .hero-title { font-size: clamp(3rem, 6.8vw, 5.6rem); }
+}
+
+@media (max-width: 1024px) {
+  :root { --header-h: 70px; }
+
+  .main-nav { display: none; }
+  .burger { display: block; }
+  .header-wa { display: none; }
+
+  .hero { padding-top: 122px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 46px; align-items: start; }
+  .hero-media { justify-self: start; max-width: 540px; }
+  .hero-ghost { display: none; }
+  .hero-lede { max-width: 36rem; }
+
+  .section-head { grid-template-columns: 1fr; gap: 20px; }
+  .section-lede { max-width: 38rem; }
+  .section-head--gallery .btn { justify-self: start; }
+
+  .booking-grid { grid-template-columns: 1fr; }
+  .booking-copy { position: static; }
+  .booking-copy > p { max-width: 34rem; }
+  .booking-perks { max-width: 34rem; }
+
+  .about-grid { grid-template-columns: 1fr; gap: 56px; }
+  .about-visual { max-width: 620px; }
+  .about-copy > p { max-width: 40rem; }
+  .about-stats { max-width: 40rem; }
+
+  .testi-grid { grid-template-columns: 1fr 1fr; }
+  .testi--featured { grid-column: span 2; }
+
+  .contact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 34px; }
+}
+
+@media (max-width: 820px) {
+  .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .g-item--large { grid-column: span 2; grid-row: span 2; }
+  .g-quote { grid-column: span 2; }
+  .footer-note { display: none; }
+}
+
+@media (max-width: 720px) {
+  :root { --pad: 20px; }
+
+  .site-header { padding-top: 12px; padding-bottom: 12px; }
+  .brand__mark { font-size: 1.6rem; }
+  .brand__sub { font-size: 0.44rem; letter-spacing: 0.22em; }
+  .header-actions { gap: 9px; }
+  .cart-btn { min-height: 36px; padding: 7px 10px; gap: 7px; font-size: 0.58rem; }
+  .cart-count { min-width: 18px; height: 18px; font-size: 0.52rem; }
+  .burger { width: 36px; height: 36px; }
+  .burger span { left: 9px; right: 9px; }
+  .burger span:first-child { top: 13px; }
+  .burger span:last-child { top: 21px; }
+  .burger.is-open span:first-child,
+  .burger.is-open span:last-child { top: 17px; }
+
+  .hero { padding-top: 112px; padding-bottom: 54px; }
+  .hero-title { font-size: clamp(2.55rem, 11.2vw, 4rem); line-height: 0.92; letter-spacing: -0.04em; }
+  .hero-lede { margin-top: 20px; font-size: 0.86rem; }
+  .hero-actions { margin-top: 26px; }
+  .hero-actions .btn { flex: 1 1 auto; padding-left: 14px; padding-right: 14px; font-size: 0.62rem; letter-spacing: 0.1em; }
+  .hero-meta { gap: 20px; margin-top: 32px; }
+  .hero-meta strong { font-size: 1.28rem; }
+  .hero-meta span { font-size: 0.48rem; }
+  .hero-media::before { inset: 12px -12px -12px 12px; }
+  .hero-frame { aspect-ratio: 4 / 4.6; }
+  .hero-badge { width: 86px; height: 86px; top: -20px; left: -8px; }
+  .hero-badge text { font-size: 7px; }
+  .hero-avail { left: 10px; bottom: 10px; padding: 8px 12px 8px 30px; }
+  .hero-avail strong { font-size: 0.85rem; }
+  .hero-side { display: none; }
+
+  .ticker { padding: 12px 0; }
+  .ticker__group { font-size: 0.56rem; letter-spacing: 0.22em; }
+  .ticker__group i { margin: 0 18px; }
+
+  .section { padding-top: 68px; padding-bottom: 68px; }
+  .section-head h2 { font-size: clamp(2.2rem, 9vw, 3.2rem); }
+  .section-lede { font-size: 0.82rem; }
+
+  .service-row {
+    grid-template-columns: 30px minmax(0, 1fr) auto;
+    gap: 12px;
+    padding: 17px 6px;
+  }
+  .service-row:hover { padding-left: 6px; padding-right: 6px; }
+  .service-name { font-size: 1.24rem; }
+  .service-desc { display: none; }
+  .service-duration { display: none; }
+  .service-price { font-size: 0.64rem; text-align: right; white-space: nowrap; }
+  .service-arrow { display: none; }
+  .service-num { font-size: 0.8rem; }
+
+  .booking-card { padding: 18px 16px; box-shadow: 6px 6px 0 var(--ink); }
+  .booking-top { padding-bottom: 16px; }
+  .booking-status { font-size: 0.45rem; padding: 4px 8px; }
+  .booking-progress { margin: 14px 0 20px; }
+  .booking-progress li { font-size: 0.5rem; gap: 5px; }
+  .booking-progress li span { font-size: 0.68rem; }
+  .service-options { gap: 6px; }
+  .service-opt { padding: 10px 11px; }
+  .service-opt .so-name { font-size: 0.74rem; }
+  .service-opt .so-meta { font-size: 0.58rem; }
+  .cal { padding: 10px; }
+  .cal-day { font-size: 0.7rem; }
+  .slots { gap: 5px; }
+  .slot { padding: 8px 4px; font-size: 0.64rem; }
+  .fields { grid-template-columns: 1fr; gap: 14px; }
+  .summary > div { font-size: 0.68rem; }
+  .booking-nav { flex-wrap: wrap; }
+  .booking-nav .btn { flex: 1; min-width: 118px; }
+
+  .shop-toolbar { margin-top: 30px; }
+  .filters { gap: 5px; }
+  .chip { padding: 6px 10px; font-size: 0.55rem; }
+  .shop-count { display: none; }
+  .product-grid { gap: 12px; row-gap: 28px; }
+  .product { padding-top: 9px; }
+  .product-media::before { font-size: 7rem; }
+  .product-media::after { inset: 8px; }
+  .product-tag { top: 8px; left: 8px; font-size: 0.42rem; padding: 3px 5px; }
+  .fav-btn { top: 7px; right: 7px; width: 28px; height: 28px; }
+  .fav-btn svg { width: 13px; height: 13px; }
+  .product-name { font-size: 0.98rem; }
+  .product-cat { font-size: 0.46rem; }
+  .product-price { font-size: 0.7rem; }
+  .p-add { width: 30px; height: 30px; }
+  .p-add svg { width: 14px; height: 14px; }
+  .product-row { margin-top: 8px; padding-top: 7px; }
+
+  .about-visual { padding-right: 16px; padding-bottom: 30px; }
+  .about-img--main { width: 84%; }
+  .about-img--small { width: 50%; border-width: 5px; }
+  .about-stamp { left: -4px; }
+  .about-vertical { display: none; }
+  .about-stats { grid-template-columns: repeat(2, 1fr); }
+  .about-stats div { padding: 14px 0 12px; }
+  .about-sign { font-size: 1.25rem; }
+
+  .gallery-grid { grid-auto-rows: 160px; gap: 7px; }
+  .g-item figcaption { left: 10px; bottom: 9px; }
+  .g-item figcaption b { font-size: 0.92rem; }
+  .g-quote { padding: 18px; }
+  .g-quote p { font-size: 1.18rem; }
+
+  .testi-grid { grid-template-columns: 1fr; gap: 9px; }
+  .testi--featured { grid-column: span 1; }
+  .testi blockquote { font-size: 1.02rem; }
+
+  .contact-cta h2 { font-size: clamp(2.4rem, 10.5vw, 3.4rem); }
+  .contact-actions { flex-direction: column; }
+  .contact-actions .btn { width: 100%; }
+  .contact-grid { grid-template-columns: 1fr; gap: 28px; }
+  .footer-top { align-items: flex-start; }
+  .footer-word { font-size: 41vw; margin-top: 24px; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .footer-bottom p:nth-child(2) { display: none; }
+
+  .cart { border-left: 0; }
+  .cart-head { padding: 18px 20px 15px; }
+  .cart-ship { padding: 11px 20px; }
+  .cart-items { padding: 2px 20px; }
+  .cart-foot { padding: 16px 20px 20px; }
+  .toast { bottom: 16px; }
+}
+
+@media (max-width: 480px) {
+  .service-options { grid-template-columns: 1fr; }
+  .hero-actions { flex-direction: column; align-items: stretch; }
+  .hero-meta { justify-content: space-between; gap: 12px; }
+  .hero-meta span { font-size: 0.44rem; }
+  .hero-frame { aspect-ratio: 4 / 4.8; }
+  .section-head--gallery { gap: 14px; }
+  .gallery-grid { grid-auto-rows: 140px; }
+  .g-quote p { font-size: 1.02rem; }
+  .success-actions .btn { font-size: 0.62rem; padding-left: 12px; padding-right: 12px; }
+}
+
+@media (max-width: 380px) {
+  .hero-title { font-size: 2.42rem; }
+  .product-name { font-size: 0.9rem; }
+  .product-price { font-size: 0.64rem; }
+  .fav-btn { display: none; }
+  .booking-progress li { letter-spacing: 0.04em; }
+}
+
+/* ---------- 21. Accesibilidad de movimiento ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .js .reveal { opacity: 1; transform: none; }
+  .ticker__track { animation: none; }
+  .hero-badge { animation: none; }
+}
+  </style>
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"><span id="scrollBar"></span></div>
+
+  <!-- ================= HEADER ================= -->
+  <header class="site-header" id="siteHeader">
+    <a class="brand" href="#inicio" aria-label="MUA Estudio de Belleza — inicio">
+      <span class="brand__mark">MUA</span>
+      <span class="brand__sub">Estudio de belleza</span>
+    </a>
+
+    <nav class="main-nav" aria-label="Navegación principal">
+      <a href="#servicios">Servicios</a>
+      <a href="#agenda">Agenda</a>
+      <a href="#tienda">Tienda</a>
+      <a href="#nosotras">Nosotras</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="header-wa" href="https://wa.me/18296308070?text=Hola%20MUA%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20sus%20servicios." target="_blank" rel="noopener">
+        WhatsApp
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+      </a>
+      <button class="cart-btn" type="button" data-cart-open>
+        Bolsa
+        <span class="cart-count" id="cartCount">0</span>
+        <span class="sr-only">— abrir carrito</span>
+      </button>
+      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Abrir menú">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <nav aria-label="Navegación móvil">
+      <a href="#inicio"><span>01</span>Inicio</a>
+      <a href="#servicios"><span>02</span>Servicios</a>
+      <a href="#agenda"><span>03</span>Agenda</a>
+      <a href="#tienda"><span>04</span>Tienda</a>
+      <a href="#nosotras"><span>05</span>Nosotras</a>
+      <a href="#contacto"><span>06</span>Contacto</a>
+    </nav>
+    <div class="mobile-menu__foot">
+      <a href="https://wa.me/18296308070" target="_blank" rel="noopener">+1 829 630 8070</a>
+      <a href="https://www.instagram.com/gaby_muamakeup/" target="_blank" rel="noopener">@gaby_muamakeup</a>
+      <p>Pimentel · Provincia Duarte · R.D.</p>
+    </div>
+  </div>
+
+  <main id="contenido">
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="inicio">
+      <span class="hero-ghost" aria-hidden="true">BELLEZA</span>
+
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow reveal"><span class="dot"></span>Estudio de belleza · Pimentel, R.D.</p>
+
+          <h1 class="hero-title reveal" style="--d:.08s">
+            No es maquillaje.<br />
+            <em>Es actitud.</em>
+          </h1>
+
+          <p class="hero-lede reveal" style="--d:.16s">
+            Maquillaje, salón, uñas y skincare con una sola regla:
+            que sigas siendo tú — pero en tu versión más segura.
+          </p>
+
+          <div class="hero-actions reveal" style="--d:.24s">
+            <a class="btn" href="#agenda">
+              Reservar mi cita
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="btn btn--ghost" href="#tienda">Explorar la tienda</a>
+          </div>
+
+          <div class="hero-meta reveal" style="--d:.32s">
+            <div><strong>8.7K</strong><span>Comunidad en IG</span></div>
+            <div><strong>500+</strong><span>Clientas felices</span></div>
+            <div><strong>5.0</strong><span>Reseñas</span></div>
+          </div>
+        </div>
+
+        <div class="hero-media reveal" style="--d:.18s">
+          <div class="hero-frame">
+            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1100&q=80"
+                 alt="Retrato editorial de belleza en blanco y negro" fetchpriority="high" />
+            <span class="hero-frame__tag">MUA · Est. 2019</span>
+          </div>
+
+          <div class="hero-badge" aria-hidden="true">
+            <svg viewBox="0 0 120 120">
+              <defs><path id="badgeCircle" d="M60,60 m-42,0 a42,42 0 1,1 84,0 a42,42 0 1,1 -84,0" /></defs>
+              <text><textPath href="#badgeCircle" startOffset="0">AGENDA TU CITA · MUA STUDIO · </textPath></text>
+            </svg>
+            <span>✦</span>
+          </div>
+
+          <div class="hero-avail">
+            <span class="pulse" aria-hidden="true"></span>
+            <span class="hero-avail__label">Próximo cupo</span>
+            <strong id="nextSlot">Consultando…</strong>
+          </div>
+
+          <span class="hero-side" aria-hidden="true">PIMENTEL · PROV. DUARTE · R.D.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TICKER ================= -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker__track">
+        <span class="ticker__group">Maquillaje <i>✦</i> Novias <i>✦</i> Salón <i>✦</i> Uñas <i>✦</i> Skincare <i>✦</i> Láser <i>✦</i> Supply <i>✦</i> Pimentel, R.D. <i>✦</i></span>
+        <span class="ticker__group">Maquillaje <i>✦</i> Novias <i>✦</i> Salón <i>✦</i> Uñas <i>✦</i> Skincare <i>✦</i> Láser <i>✦</i> Supply <i>✦</i> Pimentel, R.D. <i>✦</i></span>
+      </div>
+    </div>
+
+    <!-- ================= SERVICIOS ================= -->
+    <section class="section services" id="servicios">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow reveal"><span class="line"></span>01 — Servicios</p>
+            <h2 class="reveal" style="--d:.06s">Rituales que se<br /><em>sienten como tú.</em></h2>
+          </div>
+          <p class="section-lede reveal" style="--d:.12s">
+            Cada servicio empieza con una conversación y termina con un look que no
+            necesita filtros. Elige el tuyo y reserva en menos de un minuto.
+          </p>
+        </div>
+
+        <div class="services-list reveal" style="--d:.1s">
+          <a class="service-row" href="#agenda" data-book-service="Maquillaje Social">
+            <span class="service-num">01</span>
+            <span class="service-main">
+              <span class="service-name">Maquillaje Social</span>
+              <span class="service-desc">Eventos, fotos y noches que se recuerdan.</span>
+            </span>
+            <span class="service-duration">60 min</span>
+            <span class="service-price">desde RD$ 2,500</span>
+            <span class="service-arrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+
+          <a class="service-row" href="#agenda" data-book-service="Maquillaje de Novia">
+            <span class="service-num">02</span>
+            <span class="service-main">
+              <span class="service-name">Maquillaje de Novia</span>
+              <span class="service-desc">Prueba incluida. Del sí al último baile.</span>
+            </span>
+            <span class="service-duration">120 min</span>
+            <span class="service-price">desde RD$ 7,500</span>
+            <span class="service-arrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+
+          <a class="service-row" href="#agenda" data-book-service="Pestañas &amp; Cejas">
+            <span class="service-num">03</span>
+            <span class="service-main">
+              <span class="service-name">Pestañas &amp; Cejas</span>
+              <span class="service-desc">Extensiones, lifting y diseño con acabado natural.</span>
+            </span>
+            <span class="service-duration">90 min</span>
+            <span class="service-price">desde RD$ 1,200</span>
+            <span class="service-arrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+
+          <a class="service-row" href="#agenda" data-book-service="Peinado &amp; Salón">
+            <span class="service-num">04</span>
+            <span class="service-main">
+              <span class="service-name">Peinado &amp; Salón</span>
+              <span class="service-desc">Secado, ondas, recogidos y tratamientos.</span>
+            </span>
+            <span class="service-duration">60 min</span>
+            <span class="service-price">desde RD$ 1,500</span>
+            <span class="service-arrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+
+          <a class="service-row" href="#agenda" data-book-service="Uñas &amp; Nail Art">
+            <span class="service-num">05</span>
+            <span class="service-main">
+              <span class="service-name">Uñas &amp; Nail Art</span>
+              <span class="service-desc">Gel, acrílicas y arte minimalista.</span>
+            </span>
+            <span class="service-duration">60 min</span>
+            <span class="service-price">desde RD$ 900</span>
+            <span class="service-arrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+
+          <a class="service-row" href="#agenda" data-book-service="Facial &amp; Skincare">
+            <span class="service-num">06</span>
+            <span class="service-main">
+              <span class="service-name">Facial &amp; Skincare</span>
+              <span class="service-desc">Limpieza profunda, hidratación y glow.</span>
+            </span>
+            <span class="service-duration">60 min</span>
+            <span class="service-price">desde RD$ 1,800</span>
+            <span class="service-arrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+
+          <a class="service-row" href="#agenda" data-book-service="Depilación Láser">
+            <span class="service-num">07</span>
+            <span class="service-main">
+              <span class="service-name">Depilación Láser</span>
+              <span class="service-desc">Sesiones con equipos de última generación.</span>
+            </span>
+            <span class="service-duration">45 min</span>
+            <span class="service-price">desde RD$ 2,000</span>
+            <span class="service-arrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+
+          <a class="service-row" href="#agenda" data-book-service="Medicina Estética">
+            <span class="service-num">08</span>
+            <span class="service-main">
+              <span class="service-name">Medicina Estética</span>
+              <span class="service-desc">Valoración personalizada con nuestro equipo.</span>
+            </span>
+            <span class="service-duration">45 min</span>
+            <span class="service-price">cotización</span>
+            <span class="service-arrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+        </div>
+
+        <p class="services-note reveal">
+          ¿No sabes cuál elegir? <a href="https://wa.me/18296308070?text=Hola%20MUA%2C%20necesito%20ayuda%20para%20elegir%20un%20servicio." target="_blank" rel="noopener">Te asesoramos por WhatsApp →</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= AGENDA ================= -->
+    <section class="section booking" id="agenda">
+      <div class="wrap booking-grid">
+        <div class="booking-copy">
+          <p class="eyebrow reveal"><span class="line"></span>02 — Agenda</p>
+          <h2 class="reveal" style="--d:.06s">Reserva tu<br /><em>momento.</em></h2>
+          <p class="reveal" style="--d:.12s">
+            Elige servicio, fecha y hora en segundos. Recibirás un código de reserva
+            y podrás confirmar todo por WhatsApp con un solo toque.
+          </p>
+
+          <ul class="booking-perks reveal" style="--d:.18s">
+            <li><span>✦</span>Confirmación inmediata por WhatsApp</li>
+            <li><span>✦</span>Reagenda gratis hasta 24 h antes</li>
+            <li><span>✦</span>Atención personalizada, sin prisas</li>
+          </ul>
+
+          <div class="booking-contact reveal" style="--d:.24s">
+            <span class="eyebrow">Estudio</span>
+            <a href="tel:+18296308070">+1 829 630 8070</a>
+            <p>Pimentel, Provincia Duarte, R.D.<br />Lun – Sáb · 9:00 AM – 7:00 PM</p>
+          </div>
+        </div>
+
+        <div class="booking-card reveal" style="--d:.1s" id="bookingCard">
+          <div class="booking-top">
+            <div>
+              <span class="eyebrow">Reserva en línea</span>
+              <h3>Tu cita en 3 pasos</h3>
+            </div>
+            <span class="booking-status">Agenda abierta</span>
+          </div>
+
+          <ol class="booking-progress" aria-label="Progreso de la reserva">
+            <li class="is-active" data-bp="1"><span>01</span>Servicio</li>
+            <li data-bp="2"><span>02</span>Fecha</li>
+            <li data-bp="3"><span>03</span>Datos</li>
+          </ol>
+
+          <form id="bookingForm" novalidate>
+            <!-- Paso 1 -->
+            <div class="bstep" data-step="1">
+              <p class="bstep__title">¿Qué te vas a hacer hoy?</p>
+              <div class="service-options">
+                <button type="button" class="service-opt" data-service="Maquillaje Social" data-price="2500" data-duration="60">
+                  <span class="so-name">Maquillaje Social</span>
+                  <span class="so-meta">60 min · desde RD$ 2,500</span>
+                </button>
+                <button type="button" class="service-opt" data-service="Maquillaje de Novia" data-price="7500" data-duration="120">
+                  <span class="so-name">Maquillaje de Novia</span>
+                  <span class="so-meta">120 min · desde RD$ 7,500</span>
+                </button>
+                <button type="button" class="service-opt" data-service="Pestañas &amp; Cejas" data-price="1200" data-duration="90">
+                  <span class="so-name">Pestañas &amp; Cejas</span>
+                  <span class="so-meta">90 min · desde RD$ 1,200</span>
+                </button>
+                <button type="button" class="service-opt" data-service="Peinado &amp; Salón" data-price="1500" data-duration="60">
+                  <span class="so-name">Peinado &amp; Salón</span>
+                  <span class="so-meta">60 min · desde RD$ 1,500</span>
+                </button>
+                <button type="button" class="service-opt" data-service="Uñas &amp; Nail Art" data-price="900" data-duration="60">
+                  <span class="so-name">Uñas &amp; Nail Art</span>
+                  <span class="so-meta">60 min · desde RD$ 900</span>
+                </button>
+                <button type="button" class="service-opt" data-service="Facial &amp; Skincare" data-price="1800" data-duration="60">
+                  <span class="so-name">Facial &amp; Skincare</span>
+                  <span class="so-meta">60 min · desde RD$ 1,800</span>
+                </button>
+                <button type="button" class="service-opt" data-service="Depilación Láser" data-price="2000" data-duration="45">
+                  <span class="so-name">Depilación Láser</span>
+                  <span class="so-meta">45 min · desde RD$ 2,000</span>
+                </button>
+                <button type="button" class="service-opt" data-service="Medicina Estética" data-price="0" data-duration="45">
+                  <span class="so-name">Medicina Estética</span>
+                  <span class="so-meta">45 min · cotización</span>
+                </button>
+              </div>
+              <p class="hint" data-hint="1" hidden>Elige un servicio para continuar.</p>
+            </div>
+
+            <!-- Paso 2 -->
+            <div class="bstep" data-step="2" hidden>
+              <div class="cal">
+                <div class="cal-head">
+                  <button type="button" id="calPrev" aria-label="Mes anterior">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+                  </button>
+                  <span id="calLabel">—</span>
+                  <button type="button" id="calNext" aria-label="Mes siguiente">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+                  </button>
+                </div>
+                <div class="cal-week" aria-hidden="true">
+                  <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
+                </div>
+                <div class="cal-days" id="calDays" role="group" aria-label="Selecciona una fecha"></div>
+              </div>
+
+              <div class="slots-wrap">
+                <div class="slots-head">
+                  <p class="bstep__title">Horarios disponibles</p>
+                  <span id="slotsDate">Elige una fecha</span>
+                </div>
+                <div class="slots" id="slots"></div>
+                <p class="hint" data-hint="2" hidden>Selecciona una fecha y una hora.</p>
+              </div>
+            </div>
+
+            <!-- Paso 3 -->
+            <div class="bstep" data-step="3" hidden>
+              <p class="bstep__title">Tus datos</p>
+              <div class="fields">
+                <label class="field">
+                  <span>Nombre completo *</span>
+                  <input type="text" id="bkName" name="name" autocomplete="name" placeholder="Ej. Ana Rodríguez" required />
+                  <small class="field-error" data-err="name" hidden>Escribe tu nombre (mín. 3 letras).</small>
+                </label>
+                <label class="field">
+                  <span>WhatsApp / Teléfono *</span>
+                  <input type="tel" id="bkPhone" name="phone" autocomplete="tel" inputmode="tel" placeholder="809 000 0000" required />
+                  <small class="field-error" data-err="phone" hidden>Escribe un teléfono válido (mín. 10 dígitos).</small>
+                </label>
+                <label class="field field--full">
+                  <span>Email <em>(opcional)</em></span>
+                  <input type="email" id="bkEmail" name="email" autocomplete="email" placeholder="tu@email.com" />
+                  <small class="field-error" data-err="email" hidden>Revisa el formato del email.</small>
+                </label>
+                <label class="field field--full">
+                  <span>Notas para tu cita <em>(opcional)</em></span>
+                  <textarea id="bkNotes" name="notes" rows="2" placeholder="Alergias, referencias, ocasión especial…"></textarea>
+                </label>
+              </div>
+
+              <div class="summary" aria-live="polite">
+                <div><span>Servicio</span><b id="sumService">—</b></div>
+                <div><span>Fecha</span><b id="sumDate">—</b></div>
+                <div><span>Hora</span><b id="sumTime">—</b></div>
+                <div><span>Duración</span><b id="sumDuration">—</b></div>
+              </div>
+
+              <p class="form-note">Sin pago en línea. Confirmamos disponibilidad y forma de pago por WhatsApp.</p>
+            </div>
+
+            <div class="booking-nav">
+              <button type="button" class="btn btn--ghost" id="bkBack" hidden>← Atrás</button>
+              <button type="button" class="btn" id="bkNext">Continuar →</button>
+              <button type="submit" class="btn" id="bkSubmit" hidden>Confirmar cita →</button>
+            </div>
+          </form>
+
+          <!-- Éxito -->
+          <div class="booking-success" id="bookingSuccess" hidden>
+            <span class="success-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>
+            </span>
+            <span class="eyebrow">Reserva recibida</span>
+            <h3>Tu cita está <em>confirmada.</em></h3>
+            <p>Guarda tu código. Te esperamos en el estudio — llega 5 minutos antes.</p>
+
+            <div class="success-code">
+              <span>Código de reserva</span>
+              <b id="successCode">—</b>
+            </div>
+
+            <div class="success-details" id="successDetails"></div>
+
+            <div class="success-actions">
+              <a class="btn" id="waConfirm" href="#" target="_blank" rel="noopener">
+                Confirmar por WhatsApp
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <button type="button" class="btn btn--ghost" id="icsBtn">Añadir al calendario</button>
+            </div>
+
+            <button type="button" class="link-btn" id="bookAgain">Agendar otra cita</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TIENDA ================= -->
+    <section class="section shop" id="tienda">
+      <div class="wrap">
+        <div class="section-head section-head--shop">
+          <div>
+            <p class="eyebrow reveal"><span class="line"></span>03 — MUA Supply</p>
+            <h2 class="reveal" style="--d:.06s">Tu kit,<br /><em>curado por Gaby.</em></h2>
+          </div>
+          <p class="section-lede reveal" style="--d:.12s">
+            Los productos que usamos en el estudio, ahora en tu tocador.
+            Selección pequeña, intencional y probada en nosotras primero.
+          </p>
+        </div>
+
+        <div class="shop-toolbar reveal">
+          <div class="filters" role="group" aria-label="Filtrar productos por categoría">
+            <button type="button" class="chip is-active" data-filter="todo">Todo</button>
+            <button type="button" class="chip" data-filter="rostro">Rostro</button>
+            <button type="button" class="chip" data-filter="ojos">Ojos</button>
+            <button type="button" class="chip" data-filter="labios">Labios</button>
+            <button type="button" class="chip" data-filter="skincare">Skincare</button>
+            <button type="button" class="chip" data-filter="accesorios">Accesorios</button>
+          </div>
+          <p class="shop-count"><span id="shopCount">14</span> productos · Envío gratis desde RD$ 3,500</p>
+        </div>
+
+        <div class="product-grid" id="productGrid" aria-live="polite"></div>
+
+        <div class="shop-foot reveal">
+          <p>¿Buscas algo que no está aquí? <a href="https://wa.me/18296308070?text=Hola%20MUA%2C%20busco%20un%20producto%20especial." target="_blank" rel="noopener">Pídelo por WhatsApp →</a></p>
+          <p class="shop-foot__note">Pago por transferencia, efectivo o tarjeta al retirar.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= NOSOTRAS ================= -->
+    <section class="section about" id="nosotras">
+      <div class="wrap about-grid">
+        <div class="about-visual reveal">
+          <figure class="about-img about-img--main">
+            <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=900&q=80" alt="Detalle de maquillaje profesional en el estudio" loading="lazy" />
+            <figcaption>Backstage · MUA Studio</figcaption>
+          </figure>
+          <figure class="about-img about-img--small">
+            <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=80" alt="Productos de maquillaje sobre fondo neutro" loading="lazy" />
+          </figure>
+          <span class="about-stamp" aria-hidden="true">Desde 2019 ✦ Pimentel</span>
+          <span class="about-vertical" aria-hidden="true">MUA · ESTUDIO DE BELLEZA</span>
+        </div>
+
+        <div class="about-copy">
+          <p class="eyebrow reveal"><span class="line"></span>04 — Nosotras</p>
+          <h2 class="reveal" style="--d:.06s">Más que un estudio.<br /><em>Un ritual.</em></h2>
+          <p class="reveal" style="--d:.12s">
+            MUA nació en Pimentel con una idea simple: la belleza no debería
+            sentirse como un disfraz. Aquí te escuchamos, probamos, ajustamos y
+            celebramos lo que ya eres.
+          </p>
+          <p class="reveal" style="--d:.16s">
+            Maquillaje, salón, uñas, láser y estética avanzada en un mismo espacio.
+            Un equipo que se forma cada día — también en nuestra academia
+            <a href="https://www.instagram.com/muaa_cademy/" target="_blank" rel="noopener">@muaa_cademy</a> —
+            y una comunidad de más de 8,700 personas que lo vive de cerca.
+          </p>
+
+          <div class="about-stats reveal" style="--d:.22s">
+            <div><strong>2019</strong><span>Desde</span></div>
+            <div><strong>6</strong><span>Especialidades</span></div>
+            <div><strong>500+</strong><span>Clientas</span></div>
+            <div><strong>100%</strong><span>Actitud</span></div>
+          </div>
+
+          <p class="about-sign reveal" style="--d:.26s">— Gaby, fundadora</p>
+
+          <a class="btn btn--light reveal" style="--d:.3s" href="#agenda">
+            Reservar una experiencia
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= GALERÍA ================= -->
+    <section class="section gallery" id="galeria">
+      <div class="wrap">
+        <div class="section-head section-head--gallery">
+          <div>
+            <p class="eyebrow reveal"><span class="line"></span>05 — Galería</p>
+            <h2 class="reveal" style="--d:.06s">El trabajo<br /><em>habla.</em></h2>
+          </div>
+          <a class="btn btn--ghost reveal" style="--d:.12s" href="https://www.instagram.com/gaby_muamakeup/" target="_blank" rel="noopener">
+            Ver Instagram
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+          </a>
+        </div>
+
+        <div class="gallery-grid">
+          <figure class="g-item g-item--large reveal">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&q=80" alt="Retrato de belleza con maquillaje natural" loading="lazy" />
+            <figcaption><span>Editorial</span><b>Skin first</b></figcaption>
+          </figure>
+          <figure class="g-item reveal" style="--d:.06s">
+            <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=700&q=80" alt="Detalle de productos y brochas de maquillaje" loading="lazy" />
+            <figcaption><span>Detalle</span><b>El kit</b></figcaption>
+          </figure>
+          <figure class="g-item reveal" style="--d:.12s">
+            <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=700&q=80" alt="Interior del salón de belleza" loading="lazy" />
+            <figcaption><span>Espacio</span><b>El salón</b></figcaption>
+          </figure>
+          <blockquote class="g-quote reveal" style="--d:.18s">
+            <p>“Salí sintiéndome yo, pero con otra energía.”</p>
+            <cite>— Clienta MUA</cite>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TESTIMONIOS ================= -->
+    <section class="section testimonials">
+      <div class="wrap">
+        <div class="section-head section-head--test">
+          <div>
+            <p class="eyebrow reveal"><span class="line"></span>06 — Testimonios</p>
+            <h2 class="reveal" style="--d:.06s">Ellas lo<br /><em>dicen mejor.</em></h2>
+          </div>
+          <p class="section-lede reveal" style="--d:.12s">Resultados reales, palabras reales. Esto es lo que pasa cuando te sientes bien en tu piel.</p>
+        </div>
+
+        <div class="testi-grid">
+          <figure class="testi testi--featured reveal">
+            <div class="stars" aria-label="5 de 5 estrellas">★★★★★</div>
+            <blockquote>“Llegué por una boda y me quedé por el trato. Gaby entiende tu cara, tu estilo y tu tiempo. El maquillaje aguantó 14 horas.”</blockquote>
+            <figcaption><b>Carolina P.</b><span>Maquillaje de novia</span></figcaption>
+          </figure>
+
+          <figure class="testi reveal" style="--d:.08s">
+            <div class="stars" aria-label="5 de 5 estrellas">★★★★★</div>
+            <blockquote>“El estudio es impecable y el resultado súper natural. Nadie notó que llevaba pestañas — solo que me veía descansada.”</blockquote>
+            <figcaption><b>Yamilé R.</b><span>Pestañas &amp; cejas</span></figcaption>
+          </figure>
+
+          <figure class="testi reveal" style="--d:.16s">
+            <div class="stars" aria-label="5 de 5 estrellas">★★★★★</div>
+            <blockquote>“Compré la paleta Noir y la bruma por la web. Todo llegó perfecto y me asesoraron por WhatsApp antes de pagar.”</blockquote>
+            <figcaption><b>Rosanna M.</b><span>MUA Supply</span></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONTACTO / FOOTER ================= -->
+    <section class="section contact" id="contacto">
+      <div class="wrap">
+        <div class="contact-cta">
+          <p class="eyebrow reveal"><span class="line"></span>07 — Contacto</p>
+          <h2 class="reveal" style="--d:.06s">Hablemos de<br /><em>tu próximo look.</em></h2>
+          <div class="contact-actions reveal" style="--d:.12s">
+            <a class="btn btn--light" href="#agenda">
+              Reservar mi cita
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="btn btn--ghost-light" href="https://wa.me/18296308070" target="_blank" rel="noopener">WhatsApp directo</a>
+          </div>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-col reveal">
+            <span class="eyebrow">Estudio</span>
+            <p>Pimentel<br />Provincia Duarte<br />República Dominicana</p>
+            <a href="https://maps.google.com/?q=Pimentel,+Provincia+Duarte,+Republica+Dominicana" target="_blank" rel="noopener">Cómo llegar ↗</a>
+          </div>
+
+          <div class="contact-col reveal" style="--d:.06s">
+            <span class="eyebrow">Horario</span>
+            <p>Lunes – Sábado<br />9:00 AM – 7:00 PM</p>
+            <span class="contact-muted">Domingo cerrado</span>
+          </div>
+
+          <div class="contact-col reveal" style="--d:.12s">
+            <span class="eyebrow">Contacto</span>
+            <a href="tel:+18296308070">+1 829 630 8070</a>
+            <a href="https://wa.me/18296308070" target="_blank" rel="noopener">WhatsApp ↗</a>
+            <div class="socials">
+              <a href="https://www.instagram.com/gaby_muamakeup/" target="_blank" rel="noopener">Instagram</a>
+              <a href="https://www.instagram.com/muaa_cademy/" target="_blank" rel="noopener">Academia</a>
+            </div>
+          </div>
+
+          <div class="contact-col contact-col--news reveal" style="--d:.18s">
+            <span class="eyebrow">Newsletter</span>
+            <p>Drops de producto, fechas y rituales. Sin spam.</p>
+            <form class="newsletter" id="newsletter" novalidate>
+              <label class="sr-only" for="newsEmail">Tu email</label>
+              <input id="newsEmail" type="email" placeholder="tu@email.com" required />
+              <button type="submit" aria-label="Suscribirme">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </form>
+            <small>Al suscribirte aceptas recibir correos de MUA.</small>
+          </div>
+        </div>
+
+        <footer class="footer">
+          <div class="footer-top">
+            <a class="brand brand--light" href="#inicio" aria-label="MUA Estudio de Belleza — inicio">
+              <span class="brand__mark">MUA</span>
+              <span class="brand__sub">Estudio de belleza</span>
+            </a>
+            <p class="footer-note">Maquillaje · Salón · Uñas · Skincare · Láser · Supply</p>
+          </div>
+
+          <div class="footer-word" aria-hidden="true">MUA</div>
+
+          <div class="footer-bottom">
+            <p>© <span id="year">2026</span> MUA Studio. Todos los derechos reservados.</p>
+            <p>Pimentel, R.D. · Hecho con intención.</p>
+            <a href="#inicio" class="back-top">Volver arriba ↑</a>
+          </div>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= CARRITO ================= -->
+  <div class="overlay" id="overlay" hidden></div>
+
+  <aside class="cart" id="cartDrawer" aria-hidden="true" aria-labelledby="cartTitle" role="dialog" aria-modal="true">
+    <div class="cart-head">
+      <div>
+        <h2 id="cartTitle">Tu bolsa</h2>
+        <span class="cart-head__count"><span id="cartDrawerCount">0</span> <span id="cartCountWord">artículos</span></span>
+      </div>
+      <button type="button" class="icon-btn" id="cartClose" aria-label="Cerrar bolsa">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <div class="cart-ship">
+      <p id="cartShipMsg">Envío gratis desde RD$ 3,500</p>
+      <div class="ship-bar"><span id="shipBar"></span></div>
+    </div>
+
+    <div class="cart-items" id="cartItems"></div>
+
+    <div class="cart-foot">
+      <div class="cart-total">
+        <span>Subtotal</span>
+        <b id="cartSubtotal">RD$ 0</b>
+      </div>
+      <p class="cart-note">Envío y pago se coordinan por WhatsApp. Retiro disponible en el estudio.</p>
+      <button type="button" class="btn btn--full" id="checkoutBtn" disabled>
+        Finalizar por WhatsApp
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+      <button type="button" class="link-btn" id="continueShopping">Seguir comprando</button>
+    </div>
+  </aside>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+/* ============================================================
+   MUA · Catálogo de productos
+   ------------------------------------------------------------
+   Para añadir un producto copia un bloque y cámbialo.
+   - id:        único, sin espacios (se usa para el carrito)
+   - category:  rostro | ojos | labios | skincare | accesorios
+   - price:     número entero en pesos dominicanos (sin símbolo)
+   - art:       ilustración del producto:
+                mist | serum | jar | foundation | stick | compact |
+                palette | mascara | liner | lipstick | gloss |
+                brushes | sponge | polish
+   - tag:       opcional ("Nuevo", "Bestseller", "Últimas unidades")
+   ============================================================ */
+
+window.MUA_PRODUCTS = [
+  {
+    id: "bruma-hydra",
+    name: "Bruma Hidratante Hydra",
+    category: "skincare",
+    price: 1450,
+    art: "mist",
+    tag: "Bestseller",
+    desc: "Agua de rosas y ácido hialurónico para un glow inmediato."
+  },
+  {
+    id: "serum-vitc",
+    name: "Sérum Vitamina C",
+    category: "skincare",
+    price: 1890,
+    art: "serum",
+    tag: "Nuevo",
+    desc: "Textura ligera que ilumina y unifica el tono."
+  },
+  {
+    id: "crema-noir",
+    name: "Crema de Noche Noir",
+    category: "skincare",
+    price: 1650,
+    art: "jar",
+    desc: "Nutrición profunda mientras duermes. Acabado aterciopelado."
+  },
+  {
+    id: "base-skin-edit",
+    name: "Base Skin Edit",
+    category: "rostro",
+    price: 1750,
+    art: "foundation",
+    tag: "Bestseller",
+    desc: "Cobertura modulable con acabado piel real."
+  },
+  {
+    id: "contorno-sculpt",
+    name: "Contorno Sculpt",
+    category: "rostro",
+    price: 1200,
+    art: "stick",
+    desc: "Barra cremosa para esculpir en segundos."
+  },
+  {
+    id: "iluminador-champagne",
+    name: "Iluminador Champagne",
+    category: "rostro",
+    price: 1100,
+    art: "compact",
+    desc: "Un toque de luz donde tú quieras."
+  },
+  {
+    id: "paleta-noir",
+    name: "Paleta Noir · 12 Sombras",
+    category: "ojos",
+    price: 2200,
+    art: "palette",
+    tag: "Bestseller",
+    desc: "Neutros, ahumados y metálicos en una sola paleta."
+  },
+  {
+    id: "rimel-volumen",
+    name: "Rímel Volumen Extremo",
+    category: "ojos",
+    price: 980,
+    art: "mascara",
+    desc: "Pestañas definidas sin grumos, todo el día."
+  },
+  {
+    id: "delineador-graphik",
+    name: "Delineador Graphik",
+    category: "ojos",
+    price: 650,
+    art: "liner",
+    desc: "Punta ultrafina para un trazo preciso y negro intenso."
+  },
+  {
+    id: "labial-rouge",
+    name: "Labial Mate Rouge 01",
+    category: "labios",
+    price: 890,
+    art: "lipstick",
+    tag: "Nuevo",
+    desc: "Rojo clásico, textura ligera y larga duración."
+  },
+  {
+    id: "gloss-crystal",
+    name: "Gloss Crystal",
+    category: "labios",
+    price: 750,
+    art: "gloss",
+    desc: "Brillo espejo sin sensación pegajosa."
+  },
+  {
+    id: "brochas-set",
+    name: "Set de Brochas · 12 pzs",
+    category: "accesorios",
+    price: 2450,
+    art: "brushes",
+    desc: "Fibras suaves y precisas para rostro y ojos."
+  },
+  {
+    id: "esponja-duo",
+    name: "Esponja Blender Duo",
+    category: "accesorios",
+    price: 350,
+    art: "sponge",
+    desc: "Dos formas para difuminar sin marcas."
+  },
+  {
+    id: "kit-gel",
+    name: "Kit Uñas Gel Studio",
+    category: "accesorios",
+    price: 2900,
+    art: "polish",
+    tag: "Nuevo",
+    desc: "Todo lo que necesitas para un manicure de salón."
+  }
+];
+  </script>
+  <script>
+/* ============================================================
+   MUA · Estudio de Belleza
+   Lógica de interfaz, tienda, carrito y agenda
+   ============================================================ */
+(function () {
+  "use strict";
+
+  /* ---------- Helpers ---------- */
+  const $ = (sel, ctx = document) => ctx.querySelector(sel);
+  const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+
+  const STORE = {
+    cart: "mua_cart_v1",
+    favs: "mua_favs_v1",
+    appointments: "mua_appointments_v1",
+    client: "mua_client_v1"
+  };
+
+  const WA_NUMBER = "18296308070";
+  const FREE_SHIPPING = 3500;
+  const PRODUCTS = Array.isArray(window.MUA_PRODUCTS) ? window.MUA_PRODUCTS : [];
+
+  const CATEGORIES = {
+    rostro: "Rostro",
+    ojos: "Ojos",
+    labios: "Labios",
+    skincare: "Skincare",
+    accesorios: "Accesorios"
+  };
+
+  const OPEN_SLOTS = ["9:00 AM", "10:30 AM", "12:00 PM", "2:00 PM", "3:30 PM", "5:00 PM"];
+  const CLOSED_DAYS = [0]; // domingo
+  const BOOKING_HORIZON = 90; // días hacia adelante
+
+  const money = (n) => `RD$ ${Number(n).toLocaleString("en-US")}`;
+  const pad2 = (n) => String(n).padStart(2, "0");
+  const capitalize = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
+
+  const escapeHTML = (value) =>
+    String(value).replace(/[&<>"']/g, (char) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    }[char]));
+
+  function readStore(key, fallback) {
+    try {
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : fallback;
+    } catch (err) {
+      return fallback;
+    }
+  }
+
+  function writeStore(key, value) {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch (err) {
+      /* almacenamiento no disponible: la web sigue funcionando en memoria */
+    }
+  }
+
+  /* ---------- Ilustración de producto (SVG monocromo) ---------- */
+  function artSVG(type, rawUid) {
+    const uid = String(rawUid || "art").replace(/[^a-zA-Z0-9]/g, "");
+    const M = `m${uid}`;
+    const D = `d${uid}`;
+    const S = `s${uid}`;
+    const stroke = 'stroke="#0b0b0b" stroke-opacity=".15" stroke-width="1"';
+    const serif = 'font-family="Georgia, Times New Roman, serif"';
+
+    const defs = `<defs>
+      <linearGradient id="${M}" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#ffffff"/>
+        <stop offset=".38" stop-color="#eeece7"/>
+        <stop offset=".7" stop-color="#c9c6bf"/>
+        <stop offset="1" stop-color="#f4f2ed"/>
+      </linearGradient>
+      <linearGradient id="${D}" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#303030"/>
+        <stop offset=".5" stop-color="#0b0b0b"/>
+        <stop offset="1" stop-color="#2a2a2a"/>
+      </linearGradient>
+      <linearGradient id="${S}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fbfaf7"/>
+        <stop offset="1" stop-color="#dcd9d2"/>
+      </linearGradient>
+    </defs>`;
+
+    const shadow = `<ellipse cx="100" cy="241" rx="53" ry="6" fill="#0b0b0b" opacity=".12"/>`;
+    let body = "";
+
+    switch (type) {
+      case "lipstick":
+        body = `
+          <rect x="74" y="148" width="52" height="76" rx="5" fill="url(#${M})" ${stroke}/>
+          <rect x="82" y="158" width="36" height="42" fill="#f7f5f1" opacity=".6"/>
+          <path d="M84 148 L116 148 L116 112 L84 96 Z" fill="url(#${D})"/>
+          <path d="M84 144 L84 100" stroke="#ffffff" stroke-opacity=".22"/>
+          <text x="100" y="184" text-anchor="middle" ${serif} font-size="9" letter-spacing="2" fill="#0b0b0b" opacity=".65">MUA</text>`;
+        break;
+
+      case "gloss":
+        body = `
+          <rect x="84" y="118" width="32" height="112" rx="7" fill="url(#${M})" ${stroke}/>
+          <rect x="84" y="70" width="32" height="52" rx="6" fill="url(#${D})"/>
+          <rect x="90" y="134" width="20" height="66" fill="#ffffff" opacity=".45"/>
+          <text x="100" y="166" text-anchor="middle" ${serif} font-size="8" letter-spacing="2" fill="#0b0b0b" opacity=".55">GLOSS</text>`;
+        break;
+
+      case "serum":
+        body = `
+          <rect x="70" y="120" width="60" height="110" rx="11" fill="url(#${M})" ${stroke}/>
+          <rect x="88" y="100" width="24" height="22" fill="#e6e3dd" ${stroke}/>
+          <rect x="84" y="50" width="32" height="52" rx="4" fill="url(#${D})"/>
+          <rect x="94" y="40" width="12" height="12" rx="3" fill="#1a1a1a"/>
+          <rect x="78" y="156" width="44" height="54" fill="#ffffff" opacity=".55"/>
+          <line x1="84" y1="172" x2="116" y2="172" stroke="#0b0b0b" stroke-opacity=".2"/>
+          <line x1="84" y1="181" x2="104" y2="181" stroke="#0b0b0b" stroke-opacity=".12"/>
+          <text x="100" y="198" text-anchor="middle" ${serif} font-size="8" letter-spacing="2" fill="#0b0b0b" opacity=".6">VIT C</text>`;
+        break;
+
+      case "jar":
+        body = `
+          <rect x="62" y="138" width="76" height="86" rx="15" fill="url(#${M})" ${stroke}/>
+          <rect x="56" y="108" width="88" height="34" rx="9" fill="url(#${D})"/>
+          <ellipse cx="100" cy="108" rx="44" ry="7" fill="#3a3a3a"/>
+          <rect x="74" y="162" width="52" height="36" fill="#ffffff" opacity=".5"/>
+          <text x="100" y="186" text-anchor="middle" ${serif} font-size="9" letter-spacing="2.4" fill="#0b0b0b" opacity=".6">NOIR</text>`;
+        break;
+
+      case "foundation":
+        body = `
+          <rect x="72" y="116" width="56" height="116" rx="9" fill="url(#${M})" ${stroke}/>
+          <rect x="88" y="102" width="24" height="16" fill="#dcd9d3"/>
+          <path d="M86 96 h32 v8 h-32 z" fill="url(#${D})"/>
+          <rect x="106" y="83" width="16" height="15" rx="2" fill="url(#${D})"/>
+          <rect x="80" y="156" width="40" height="50" fill="#ffffff" opacity=".5"/>
+          <text x="100" y="186" text-anchor="middle" ${serif} font-size="8" letter-spacing="2" fill="#0b0b0b" opacity=".6">SKIN</text>`;
+        break;
+
+      case "stick":
+        body = `
+          <rect x="80" y="128" width="40" height="102" rx="6" fill="url(#${M})" ${stroke}/>
+          <path d="M80 128 L100 94 L120 128 Z" fill="url(#${D})"/>
+          <line x1="100" y1="128" x2="100" y2="226" stroke="#0b0b0b" stroke-opacity=".16"/>
+          <rect x="86" y="170" width="28" height="34" fill="#ffffff" opacity=".45"/>
+          <text x="100" y="191" text-anchor="middle" ${serif} font-size="7" letter-spacing="1.6" fill="#0b0b0b" opacity=".55">SCULPT</text>`;
+        break;
+
+      case "compact":
+        body = `
+          <circle cx="100" cy="158" r="54" fill="url(#${M})" ${stroke}/>
+          <circle cx="100" cy="158" r="42" fill="#e9e6e0"/>
+          <path d="M100 132 l5 12 13 2 -9 9 2 13 -11 -6 -11 6 2 -13 -9 -9 13 -2 z" fill="#0b0b0b" opacity=".75"/>
+          <path d="M58 132 A54 54 0 0 1 142 132" fill="none" stroke="#ffffff" stroke-opacity=".5" stroke-width="2"/>`;
+        break;
+
+      case "palette": {
+        const colors = ["#eceae4", "#c9c6bf", "#8e8b85", "#333333", "#f5f3ef", "#a7a49e", "#5b5955", "#1b1b1b", "#dedbd4", "#b3b0aa", "#777570", "#2a2a2a"];
+        let pans = "";
+        colors.forEach((color, i) => {
+          const cx = 70 + (i % 4) * 20;
+          const cy = 130 + Math.floor(i / 4) * 21;
+          pans += `<circle cx="${cx}" cy="${cy}" r="7.5" fill="${color}"/>`;
+        });
+        body = `
+          <rect x="46" y="104" width="108" height="92" rx="9" fill="url(#${D})"/>
+          <rect x="54" y="112" width="92" height="76" rx="5" fill="#1a1a1a"/>
+          ${pans}
+          <text x="100" y="218" text-anchor="middle" ${serif} font-size="8" letter-spacing="2.4" fill="#0b0b0b" opacity=".6">NOIR · 12</text>`;
+        break;
+      }
+
+      case "mascara":
+        body = `
+          <rect x="84" y="126" width="32" height="106" rx="8" fill="url(#${D})"/>
+          <rect x="84" y="68" width="32" height="60" rx="8" fill="url(#${M})" ${stroke}/>
+          <line x1="100" y1="82" x2="100" y2="120" stroke="#ffffff" stroke-opacity=".18"/>
+          <text x="100" y="200" text-anchor="middle" ${serif} font-size="8" letter-spacing="2" fill="#ffffff" opacity=".5">MUA</text>`;
+        break;
+
+      case "liner":
+        body = `
+          <rect x="90" y="96" width="20" height="128" rx="5" fill="url(#${D})"/>
+          <path d="M90 96 L100 72 L110 96 Z" fill="#0b0b0b"/>
+          <rect x="90" y="150" width="20" height="7" fill="url(#${M})"/>
+          <line x1="100" y1="160" x2="100" y2="212" stroke="#ffffff" stroke-opacity=".14"/>`;
+        break;
+
+      case "brushes": {
+        const brush = (x, rotate) => `
+          <g transform="translate(${x} 0) rotate(${rotate} 100 160)">
+            <rect x="96" y="118" width="8" height="112" rx="4" fill="url(#${D})"/>
+            <rect x="92" y="100" width="16" height="20" fill="url(#${M})" ${stroke}/>
+            <path d="M100 62 C112 74 113 92 108 102 L92 102 C87 92 88 74 100 62 Z" fill="url(#${S})" ${stroke}/>
+          </g>`;
+        body = brush(-20, -15) + brush(0, 0) + brush(20, 15);
+        break;
+      }
+
+      case "sponge":
+        body = `
+          <path d="M76 118 C62 140 56 158 56 178 c0 25 15 43 34 43 c23 0 35 -21 35 -45 c0 -25 -15 -42 -35 -58 z" fill="url(#${S})" ${stroke}/>
+          <path d="M122 146 c13 13 20 27 20 42 c0 20 -11 33 -26 35 c9 -8 14 -20 14 -34 c0 -16 -5 -30 -14 -42 z" fill="url(#${M})" ${stroke}/>
+          <path d="M68 158 c-3 12 -3 24 0 34" fill="none" stroke="#ffffff" stroke-opacity=".65" stroke-width="2"/>`;
+        break;
+
+      case "polish":
+        body = `
+          <rect x="66" y="130" width="68" height="94" rx="10" fill="url(#${M})" ${stroke}/>
+          <rect x="86" y="112" width="28" height="18" fill="#dcd9d3"/>
+          <rect x="82" y="62" width="36" height="50" rx="4" fill="url(#${D})"/>
+          <rect x="74" y="162" width="52" height="44" fill="#ffffff" opacity=".5"/>
+          <text x="100" y="189" text-anchor="middle" ${serif} font-size="8" letter-spacing="2" fill="#0b0b0b" opacity=".6">GEL</text>`;
+        break;
+
+      case "mist":
+      default:
+        body = `
+          <rect x="72" y="116" width="56" height="116" rx="11" fill="url(#${M})" ${stroke}/>
+          <rect x="86" y="92" width="28" height="24" fill="#e4e1db" ${stroke}/>
+          <rect x="80" y="64" width="40" height="28" rx="3" fill="url(#${D})"/>
+          <path d="M80 76 H64" stroke="#0b0b0b" stroke-opacity=".55" stroke-width="3"/>
+          <circle cx="54" cy="70" r="1.8" fill="#0b0b0b" opacity=".35"/>
+          <circle cx="48" cy="80" r="1.4" fill="#0b0b0b" opacity=".25"/>
+          <circle cx="58" cy="85" r="1.2" fill="#0b0b0b" opacity=".25"/>
+          <rect x="80" y="152" width="40" height="54" fill="#ffffff" opacity=".55"/>
+          <text x="100" y="182" text-anchor="middle" ${serif} font-size="7" letter-spacing="1.6" fill="#0b0b0b" opacity=".6">HYDRA</text>`;
+        break;
+    }
+
+    return `<svg class="art-svg" viewBox="0 0 200 260" aria-hidden="true" focusable="false">${defs}${shadow}${body}</svg>`;
+  }
+
+  /* ============================================================
+     TIENDA
+     ============================================================ */
+  const productGrid = $("#productGrid");
+  const shopCount = $("#shopCount");
+  const favs = new Set(readStore(STORE.favs, []));
+  let activeFilter = "todo";
+
+  function productCard(product, index) {
+    const letter = product.name.trim().charAt(0).toUpperCase();
+    const isFav = favs.has(product.id);
+    const category = CATEGORIES[product.category] || product.category;
+
+    return `
+      <article class="product" style="--i:${index}" data-id="${escapeHTML(product.id)}">
+        <div class="product-media" data-letter="${escapeHTML(letter)}">
+          ${product.tag ? `<span class="product-tag">${escapeHTML(product.tag)}</span>` : ""}
+          <button class="fav-btn${isFav ? " is-fav" : ""}" type="button" data-fav="${escapeHTML(product.id)}"
+                  aria-pressed="${isFav}" aria-label="${isFav ? "Quitar de" : "Guardar en"} favoritos: ${escapeHTML(product.name)}">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-9.5A4 4 0 0 1 12 7a4 4 0 0 1 7 3.5C19 15.6 12 20 12 20Z"/></svg>
+          </button>
+          ${artSVG(product.art, product.id)}
+        </div>
+        <div class="product-info">
+          <span class="product-cat">${escapeHTML(category)}</span>
+          <h3 class="product-name">${escapeHTML(product.name)}</h3>
+          <div class="product-row">
+            <span class="product-price">${money(product.price)}</span>
+            <button class="p-add" type="button" data-add="${escapeHTML(product.id)}"
+                    aria-label="Añadir ${escapeHTML(product.name)} a la bolsa">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+          </div>
+        </div>
+      </article>`;
+  }
+
+  function renderProducts(filter) {
+    activeFilter = filter || activeFilter;
+    if (!productGrid) return;
+
+    const list = activeFilter === "todo"
+      ? PRODUCTS
+      : PRODUCTS.filter((product) => product.category === activeFilter);
+
+    productGrid.innerHTML = list.map(productCard).join("");
+    if (shopCount) shopCount.textContent = String(list.length);
+  }
+
+  if (productGrid) {
+    productGrid.addEventListener("click", (event) => {
+      const addBtn = event.target.closest("[data-add]");
+      if (addBtn) {
+        addToCart(addBtn.dataset.add);
+        flashAdded(addBtn);
+        return;
+      }
+
+      const favBtn = event.target.closest("[data-fav]");
+      if (favBtn) toggleFav(favBtn.dataset.fav);
+    });
+  }
+
+  $$("[data-filter]").forEach((button) => {
+    button.addEventListener("click", () => {
+      $$("[data-filter]").forEach((item) => item.classList.toggle("is-active", item === button));
+      renderProducts(button.dataset.filter);
+    });
+  });
+
+  function toggleFav(id) {
+    const product = PRODUCTS.find((item) => item.id === id);
+    if (!product) return;
+
+    if (favs.has(id)) {
+      favs.delete(id);
+      showToast("Quitado de favoritos.");
+    } else {
+      favs.add(id);
+      showToast("Guardado en favoritos ✦");
+    }
+    writeStore(STORE.favs, Array.from(favs));
+
+    const button = $(`[data-fav="${id}"]`);
+    if (button) {
+      const active = favs.has(id);
+      button.classList.toggle("is-fav", active);
+      button.setAttribute("aria-pressed", String(active));
+      button.setAttribute("aria-label", `${active ? "Quitar de" : "Guardar en"} favoritos: ${product.name}`);
+    }
+  }
+
+  function flashAdded(button) {
+    if (!button) return;
+    if (!button._originalHTML) button._originalHTML = button.innerHTML;
+
+    button.classList.add("is-added");
+    button.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 6"/></svg>`;
+
+    clearTimeout(button._addedTimer);
+    button._addedTimer = setTimeout(() => {
+      button.classList.remove("is-added");
+      button.innerHTML = button._originalHTML;
+    }, 1300);
+  }
+
+  /* ============================================================
+     CARRITO
+     ============================================================ */
+  const cartDrawer = $("#cartDrawer");
+  const overlay = $("#overlay");
+  const cartItemsEl = $("#cartItems");
+  const cartSubtotalEl = $("#cartSubtotal");
+  const cartShipMsg = $("#cartShipMsg");
+  const shipBar = $("#shipBar");
+  const checkoutBtn = $("#checkoutBtn");
+  const cartCountEl = $("#cartCount");
+  const cartDrawerCount = $("#cartDrawerCount");
+  const cartCountWord = $("#cartCountWord");
+
+  let cart = normalizeCart(readStore(STORE.cart, []));
+  let overlayTimer = null;
+  let lastFocus = null;
+  let lastMenuFocus = null;
+  let menuOpen = false;
+
+  function normalizeCart(raw) {
+    if (!Array.isArray(raw)) return [];
+    return raw
+      .filter((entry) => entry && PRODUCTS.some((product) => product.id === entry.id))
+      .map((entry) => ({
+        id: entry.id,
+        qty: Math.min(99, Math.max(1, parseInt(entry.qty, 10) || 1))
+      }));
+  }
+
+  function getCartData() {
+    const items = cart
+      .map((entry) => ({
+        product: PRODUCTS.find((item) => item.id === entry.id),
+        qty: entry.qty
+      }))
+      .filter((entry) => entry.product);
+
+    const count = items.reduce((sum, entry) => sum + entry.qty, 0);
+    const subtotal = items.reduce((sum, entry) => sum + entry.product.price * entry.qty, 0);
+    return { items, count, subtotal };
+  }
+
+  function persistCart() {
+    writeStore(STORE.cart, cart);
+  }
+
+  function renderCart(animateBadge) {
+    if (!cartItemsEl) return;
+
+    const { items, count, subtotal } = getCartData();
+
+    if (!items.length) {
+      cartItemsEl.innerHTML = `
+        <div class="cart-empty">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l1 12H5L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+          <h3>Tu bolsa está vacía</h3>
+          <p>Productos probados en el estudio, listos para tu tocador.</p>
+          <button type="button" class="btn btn--ghost" data-go-shop>Explorar productos</button>
+        </div>`;
+    } else {
+      cartItemsEl.innerHTML = items.map(({ product, qty }) => `
+        <div class="ci">
+          <div class="ci-art">${artSVG(product.art, `cart-${product.id}`)}</div>
+          <p class="ci-name">${escapeHTML(product.name)}</p>
+          <span class="ci-meta">${escapeHTML(CATEGORIES[product.category] || product.category)}</span>
+          <div class="ci-bottom">
+            <div class="qty">
+              <button type="button" data-qty="-1" data-id="${escapeHTML(product.id)}" aria-label="Quitar una unidad de ${escapeHTML(product.name)}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg>
+              </button>
+              <span aria-live="polite">${qty}</span>
+              <button type="button" data-qty="1" data-id="${escapeHTML(product.id)}" aria-label="Añadir una unidad de ${escapeHTML(product.name)}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+            </div>
+            <span class="ci-price">${money(product.price * qty)}</span>
+          </div>
+          <button type="button" class="ci-remove" data-remove="${escapeHTML(product.id)}">Quitar</button>
+        </div>`).join("");
+    }
+
+    if (cartSubtotalEl) cartSubtotalEl.textContent = money(subtotal);
+    if (cartCountEl) cartCountEl.textContent = String(count);
+    if (cartDrawerCount) cartDrawerCount.textContent = String(count);
+    if (cartCountWord) cartCountWord.textContent = count === 1 ? "artículo" : "artículos";
+    if (checkoutBtn) checkoutBtn.disabled = count === 0;
+
+    if (cartShipMsg) {
+      if (subtotal <= 0) {
+        cartShipMsg.textContent = `Envío gratis desde ${money(FREE_SHIPPING)}.`;
+      } else if (subtotal < FREE_SHIPPING) {
+        cartShipMsg.innerHTML = `Te faltan <strong>${money(FREE_SHIPPING - subtotal)}</strong> para el envío gratis.`;
+      } else {
+        cartShipMsg.innerHTML = `<strong>Envío gratis desbloqueado.</strong> ✦`;
+      }
+    }
+
+    if (shipBar) {
+      shipBar.style.width = `${Math.min(100, (subtotal / FREE_SHIPPING) * 100)}%`;
+    }
+
+    if (animateBadge && cartCountEl) {
+      cartCountEl.classList.remove("bump");
+      void cartCountEl.offsetWidth;
+      cartCountEl.classList.add("bump");
+    }
+  }
+
+  function addToCart(id) {
+    const product = PRODUCTS.find((item) => item.id === id);
+    if (!product) return;
+
+    const entry = cart.find((item) => item.id === id);
+    if (entry) entry.qty = Math.min(99, entry.qty + 1);
+    else cart.push({ id, qty: 1 });
+
+    persistCart();
+    renderCart(true);
+    showToast(`${product.name} añadido a la bolsa.`);
+  }
+
+  function changeQty(id, delta) {
+    const entry = cart.find((item) => item.id === id);
+    if (!entry) return;
+
+    entry.qty += delta;
+    if (entry.qty <= 0) cart = cart.filter((item) => item.id !== id);
+
+    persistCart();
+    renderCart();
+  }
+
+  function removeFromCart(id) {
+    cart = cart.filter((item) => item.id !== id);
+    persistCart();
+    renderCart();
+    showToast("Producto eliminado de la bolsa.");
+  }
+
+  if (cartItemsEl) {
+    cartItemsEl.addEventListener("click", (event) => {
+      const qtyBtn = event.target.closest("[data-qty]");
+      if (qtyBtn) {
+        changeQty(qtyBtn.dataset.id, parseInt(qtyBtn.dataset.qty, 10));
+        return;
+      }
+
+      const removeBtn = event.target.closest("[data-remove]");
+      if (removeBtn) {
+        removeFromCart(removeBtn.dataset.remove);
+        return;
+      }
+
+      if (event.target.closest("[data-go-shop]")) {
+        closeCart();
+        const shop = $("#tienda");
+        if (shop) setTimeout(() => shop.scrollIntoView({ behavior: "smooth", block: "start" }), 120);
+      }
+    });
+  }
+
+  function openCart() {
+    if (!cartDrawer || !overlay) return;
+    if (menuOpen) setMenu(false);
+
+    renderCart();
+    lastFocus = document.activeElement;
+    overlay.hidden = false;
+    clearTimeout(overlayTimer);
+
+    requestAnimationFrame(() => {
+      overlay.classList.add("is-open");
+      cartDrawer.classList.add("is-open");
+    });
+
+    cartDrawer.setAttribute("aria-hidden", "false");
+    document.body.classList.add("is-locked");
+
+    setTimeout(() => {
+      const closeBtn = $("#cartClose");
+      if (closeBtn) closeBtn.focus({ preventScroll: true });
+    }, 300);
+  }
+
+  function closeCart() {
+    if (!cartDrawer || !overlay) return;
+
+    cartDrawer.classList.remove("is-open");
+    cartDrawer.setAttribute("aria-hidden", "true");
+    overlay.classList.remove("is-open");
+
+    clearTimeout(overlayTimer);
+    overlayTimer = setTimeout(() => {
+      overlay.hidden = true;
+    }, 460);
+
+    if (!menuOpen) document.body.classList.remove("is-locked");
+    if (lastFocus && typeof lastFocus.focus === "function") {
+      lastFocus.focus({ preventScroll: true });
+    }
+  }
+
+  $$("[data-cart-open]").forEach((button) => button.addEventListener("click", openCart));
+  const cartCloseBtn = $("#cartClose");
+  if (cartCloseBtn) cartCloseBtn.addEventListener("click", closeCart);
+  if (overlay) overlay.addEventListener("click", closeCart);
+  const continueShoppingBtn = $("#continueShopping");
+  if (continueShoppingBtn) continueShoppingBtn.addEventListener("click", closeCart);
+
+  if (cartDrawer) {
+    cartDrawer.addEventListener("keydown", (event) => {
+      if (event.key !== "Tab") return;
+
+      const focusables = $$('a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])', cartDrawer)
+        .filter((element) => element.offsetParent !== null);
+
+      if (!focusables.length) return;
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+  }
+
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener("click", () => {
+      const { items, subtotal } = getCartData();
+      if (!items.length) return;
+
+      const lines = items
+        .map(({ product, qty }) => `• ${qty} × ${product.name} — ${money(product.price * qty)}`)
+        .join("\n");
+
+      const message = `Hola MUA ✦ Quiero confirmar este pedido:\n\n${lines}\n\nSubtotal: ${money(subtotal)}\n\nNombre:\nDirección de entrega (o retiro en el estudio):\n\n¡Gracias!`;
+      const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
+      const opened = window.open(url, "_blank", "noopener");
+
+      if (!opened) window.location.href = url;
+    });
+  }
+
+  /* ============================================================
+     MENÚ MÓVIL / HEADER / REVEALS
+     ============================================================ */
+  const header = $("#siteHeader");
+  const burger = $("#burger");
+  const mobileMenu = $("#mobileMenu");
+  const scrollBar = $("#scrollBar");
+
+  function setMenu(open) {
+    if (!mobileMenu || !burger || !header) return;
+
+    menuOpen = open;
+    mobileMenu.classList.toggle("is-open", open);
+    mobileMenu.setAttribute("aria-hidden", String(!open));
+    burger.classList.toggle("is-open", open);
+    burger.setAttribute("aria-expanded", String(open));
+    burger.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+    header.classList.toggle("is-menu-open", open);
+
+    if (open) {
+      lastMenuFocus = document.activeElement;
+      document.body.classList.add("is-locked");
+      setTimeout(() => {
+        const firstLink = $("a", mobileMenu);
+        if (firstLink) firstLink.focus({ preventScroll: true });
+      }, 250);
+    } else {
+      document.body.classList.toggle("is-locked", cartDrawer.classList.contains("is-open"));
+      if (lastMenuFocus && typeof lastMenuFocus.focus === "function") {
+        lastMenuFocus.focus({ preventScroll: true });
+      }
+      onScroll();
+    }
+  }
+
+  if (burger) {
+    burger.addEventListener("click", () => setMenu(!menuOpen));
+  }
+
+  $$("a", mobileMenu || document.createElement("div")).forEach((link) => {
+    link.addEventListener("click", () => setMenu(false));
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    if (cartDrawer && cartDrawer.classList.contains("is-open")) closeCart();
+    else if (menuOpen) setMenu(false);
+  });
+
+  function onScroll() {
+    const y = window.scrollY || window.pageYOffset || 0;
+
+    if (header && !menuOpen) header.classList.toggle("is-scrolled", y > 30);
+
+    if (scrollBar) {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      scrollBar.style.transform = `scaleX(${max > 0 ? Math.min(1, y / max) : 0})`;
+    }
+  }
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 1024 && menuOpen) setMenu(false);
+  });
+  onScroll();
+
+  const revealElements = $$(".reveal");
+  if ("IntersectionObserver" in window) {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-in");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: "0px 0px -5% 0px" });
+
+    revealElements.forEach((element) => revealObserver.observe(element));
+  } else {
+    revealElements.forEach((element) => element.classList.add("is-in"));
+  }
+
+  /* ============================================================
+     FECHAS / AGENDA
+     ============================================================ */
+  const bookingForm = $("#bookingForm");
+  const bookingSuccess = $("#bookingSuccess");
+  const bookingCard = $("#bookingCard");
+  const serviceOptions = $$(".service-opt");
+  const calDays = $("#calDays");
+  const calLabel = $("#calLabel");
+  const calPrev = $("#calPrev");
+  const calNext = $("#calNext");
+  const slotsEl = $("#slots");
+  const slotsDate = $("#slotsDate");
+  const nextSlotEl = $("#nextSlot");
+  const progressItems = $$(".booking-progress li");
+
+  let appointments = readStore(STORE.appointments, []);
+  if (!Array.isArray(appointments)) appointments = [];
+  appointments = appointments
+    .filter((item) => item && typeof item.date === "string" && typeof item.time === "string")
+    .map((item) => ({
+      ...item,
+      duration: Number(item.duration) || 60,
+      price: Number(item.price) || 0
+    }));
+
+  const booking = {
+    step: 1,
+    service: null,
+    price: 0,
+    duration: 0,
+    date: null,
+    time: null
+  };
+
+  let calCursor = new Date();
+  calCursor = new Date(calCursor.getFullYear(), calCursor.getMonth(), 1);
+  let lastAppointment = null;
+
+  const pad = pad2;
+
+  function dateKey(dateObj) {
+    return `${dateObj.getFullYear()}-${pad(dateObj.getMonth() + 1)}-${pad(dateObj.getDate())}`;
+  }
+
+  function parseKey(key) {
+    const parts = String(key).split("-").map(Number);
+    return new Date(parts[0], parts[1] - 1, parts[2]);
+  }
+
+  function startOfToday() {
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  }
+
+  function isClosed(dateObj) {
+    return CLOSED_DAYS.includes(dateObj.getDay());
+  }
+
+  function slotToDate(key, time) {
+    const dateObj = parseKey(key);
+    const pieces = String(time).split(" ");
+    const clock = pieces[0].split(":").map(Number);
+    let hours = clock[0];
+    const minutes = clock[1] || 0;
+    const meridiem = pieces[1];
+
+    if (meridiem === "PM" && hours !== 12) hours += 12;
+    if (meridiem === "AM" && hours === 12) hours = 0;
+
+    dateObj.setHours(hours, minutes, 0, 0);
+    return dateObj;
+  }
+
+  function formatLongDate(key) {
+    const formatted = new Intl.DateTimeFormat("es-DO", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    }).format(parseKey(key));
+    return capitalize(formatted);
+  }
+
+  function isSlotTaken(key, time) {
+    return appointments.some((item) => item.date === key && item.time === time);
+  }
+
+  function availableSlots(key) {
+    const now = new Date();
+    return OPEN_SLOTS.filter((time) => {
+      if (isSlotTaken(key, time)) return false;
+      return slotToDate(key, time) > now;
+    });
+  }
+
+  function findNextAvailableDate() {
+    const start = startOfToday();
+
+    for (let i = 0; i < BOOKING_HORIZON; i += 1) {
+      const candidate = new Date(start);
+      candidate.setDate(start.getDate() + i);
+      if (isClosed(candidate)) continue;
+
+      const key = dateKey(candidate);
+      if (availableSlots(key).length) return key;
+    }
+
+    return null;
+  }
+
+  function updateNextSlot() {
+    if (!nextSlotEl) return;
+
+    const start = startOfToday();
+    for (let i = 0; i < BOOKING_HORIZON; i += 1) {
+      const candidate = new Date(start);
+      candidate.setDate(start.getDate() + i);
+      if (isClosed(candidate)) continue;
+
+      const key = dateKey(candidate);
+      const slots = availableSlots(key);
+      if (!slots.length) continue;
+
+      let label;
+      if (i === 0) label = "Hoy";
+      else if (i === 1) label = "Mañana";
+      else {
+        label = new Intl.DateTimeFormat("es-DO", {
+          weekday: "short",
+          day: "numeric",
+          month: "short"
+        }).format(candidate).replace(/\./g, "");
+      }
+
+      nextSlotEl.textContent = `${label} · ${slots[0]}`;
+      return;
+    }
+
+    nextSlotEl.textContent = "Escríbenos";
+  }
+
+  function renderCalendar() {
+    if (!calDays || !calLabel) return;
+
+    const year = calCursor.getFullYear();
+    const month = calCursor.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const offset = (firstDay.getDay() + 6) % 7; // lunes primero
+    const todayKey = dateKey(new Date());
+    const today = startOfToday();
+    const maxDate = new Date(today);
+    maxDate.setDate(today.getDate() + BOOKING_HORIZON);
+
+    let html = "";
+    for (let i = 0; i < offset; i += 1) {
+      html += `<span class="cal-day" aria-hidden="true"></span>`;
+    }
+
+    for (let day = 1; day <= daysInMonth; day += 1) {
+      const dateObj = new Date(year, month, day);
+      const key = dateKey(dateObj);
+      const closed = isClosed(dateObj);
+      const past = dateObj < today;
+      const tooFar = dateObj > maxDate;
+      const disabled = closed || past || tooFar;
+      const selected = booking.date === key;
+      const isToday = key === todayKey;
+
+      html += `<button type="button"
+        class="cal-day${selected ? " is-selected" : ""}${isToday ? " is-today" : ""}"
+        data-date="${key}"
+        ${disabled ? "disabled" : ""}
+        ${selected ? 'aria-pressed="true"' : 'aria-pressed="false"'}
+        aria-label="${escapeHTML(formatLongDate(key))}${closed ? " (cerrado)" : ""}"
+      >${day}</button>`;
+    }
+
+    calDays.innerHTML = html;
+    calLabel.textContent = capitalize(
+      new Intl.DateTimeFormat("es-DO", { month: "long", year: "numeric" }).format(firstDay)
+    );
+
+    const now = new Date();
+    if (calPrev) calPrev.disabled = year === now.getFullYear() && month === now.getMonth();
+
+    const limit = new Date(now.getFullYear(), now.getMonth() + 3, 1);
+    if (calNext) calNext.disabled = year * 12 + month >= limit.getFullYear() * 12 + limit.getMonth();
+  }
+
+  function renderSlots() {
+    if (!slotsEl || !slotsDate) return;
+
+    if (!booking.date) {
+      slotsDate.textContent = "Elige una fecha";
+      slotsEl.innerHTML = `<p class="slots-empty">Primero elige una fecha en el calendario.</p>`;
+      return;
+    }
+
+    const dateObj = parseKey(booking.date);
+    const shortDate = new Intl.DateTimeFormat("es-DO", {
+      weekday: "short",
+      day: "numeric",
+      month: "short"
+    }).format(dateObj).replace(/\./g, "");
+    slotsDate.textContent = shortDate;
+
+    const available = availableSlots(booking.date);
+    if (!available.length) {
+      slotsEl.innerHTML = `<p class="slots-empty">No quedan cupos este día. Prueba con otra fecha.</p>`;
+      return;
+    }
+
+    slotsEl.innerHTML = OPEN_SLOTS.map((time) => {
+      const taken = isSlotTaken(booking.date, time);
+      const past = slotToDate(booking.date, time) <= new Date();
+      const disabled = taken || past;
+      const helper = taken ? " (ocupado)" : past ? " (no disponible)" : "";
+
+      return `<button type="button"
+        class="slot${booking.time === time ? " is-selected" : ""}"
+        data-time="${time}"
+        ${disabled ? "disabled" : ""}
+        aria-label="${time}${helper}"
+      >${time}</button>`;
+    }).join("");
+  }
+
+  function showHint(step, visible) {
+    const hint = $(`[data-hint="${step}"]`);
+    if (hint) hint.hidden = !visible;
+  }
+
+  function hideAllHints() {
+    $$(".hint").forEach((hint) => { hint.hidden = true; });
+  }
+
+  function setStep(step) {
+    booking.step = step;
+
+    $$(".bstep").forEach((element) => {
+      element.hidden = Number(element.dataset.step) !== step;
+    });
+
+    progressItems.forEach((item) => {
+      const itemStep = Number(item.dataset.bp);
+      item.classList.toggle("is-active", itemStep === step);
+      item.classList.toggle("is-done", itemStep < step);
+    });
+
+    const backBtn = $("#bkBack");
+    const nextBtn = $("#bkNext");
+    const submitBtn = $("#bkSubmit");
+
+    if (backBtn) backBtn.hidden = step === 1;
+    if (nextBtn) nextBtn.hidden = step === 3;
+    if (submitBtn) submitBtn.hidden = step !== 3;
+
+    hideAllHints();
+
+    if (step === 2) {
+      if (!booking.date) {
+        const nextDate = findNextAvailableDate();
+        if (nextDate) {
+          booking.date = nextDate;
+          const dateObj = parseKey(nextDate);
+          calCursor = new Date(dateObj.getFullYear(), dateObj.getMonth(), 1);
+        }
+      }
+      renderCalendar();
+      renderSlots();
+    }
+
+    if (step === 3) updateSummary();
+  }
+
+  function updateSummary() {
+    const serviceEl = $("#sumService");
+    const dateEl = $("#sumDate");
+    const timeEl = $("#sumTime");
+    const durationEl = $("#sumDuration");
+
+    if (serviceEl) serviceEl.textContent = booking.service || "—";
+    if (dateEl) dateEl.textContent = booking.date ? formatLongDate(booking.date) : "—";
+    if (timeEl) timeEl.textContent = booking.time || "—";
+    if (durationEl) durationEl.textContent = booking.duration ? `${booking.duration} min` : "—";
+  }
+
+  function selectService(name) {
+    const option = serviceOptions.find((button) => button.dataset.service === name);
+    if (!option) return;
+
+    serviceOptions.forEach((button) => {
+      const active = button === option;
+      button.classList.toggle("is-selected", active);
+      button.setAttribute("aria-pressed", String(active));
+    });
+
+    booking.service = option.dataset.service;
+    booking.price = Number(option.dataset.price) || 0;
+    booking.duration = Number(option.dataset.duration) || 0;
+    showHint(1, false);
+  }
+
+  serviceOptions.forEach((button) => {
+    button.setAttribute("aria-pressed", "false");
+    button.addEventListener("click", () => selectService(button.dataset.service));
+  });
+
+  $$("[data-book-service]").forEach((link) => {
+    link.addEventListener("click", () => {
+      selectService(link.dataset.bookService);
+      setStep(1);
+    });
+  });
+
+  if (calDays) {
+    calDays.addEventListener("click", (event) => {
+      const dayBtn = event.target.closest("[data-date]");
+      if (!dayBtn || dayBtn.disabled) return;
+
+      booking.date = dayBtn.dataset.date;
+      booking.time = null;
+      showHint(2, false);
+      renderCalendar();
+      renderSlots();
+    });
+  }
+
+  if (calPrev) {
+    calPrev.addEventListener("click", () => {
+      calCursor = new Date(calCursor.getFullYear(), calCursor.getMonth() - 1, 1);
+      renderCalendar();
+    });
+  }
+
+  if (calNext) {
+    calNext.addEventListener("click", () => {
+      calCursor = new Date(calCursor.getFullYear(), calCursor.getMonth() + 1, 1);
+      renderCalendar();
+    });
+  }
+
+  if (slotsEl) {
+    slotsEl.addEventListener("click", (event) => {
+      const slotBtn = event.target.closest("[data-time]");
+      if (!slotBtn || slotBtn.disabled) return;
+
+      booking.time = slotBtn.dataset.time;
+      showHint(2, false);
+      renderSlots();
+    });
+  }
+
+  const bkNext = $("#bkNext");
+  if (bkNext) {
+    bkNext.addEventListener("click", () => {
+      if (booking.step === 1) {
+        if (!booking.service) {
+          showHint(1, true);
+          return;
+        }
+        setStep(2);
+        return;
+      }
+
+      if (booking.step === 2) {
+        if (!booking.date || !booking.time) {
+          showHint(2, true);
+          return;
+        }
+        setStep(3);
+      }
+    });
+  }
+
+  const bkBack = $("#bkBack");
+  if (bkBack) {
+    bkBack.addEventListener("click", () => {
+      setStep(Math.max(1, booking.step - 1));
+    });
+  }
+
+  function setFieldError(name, hasError) {
+    const errorEl = $(`[data-err="${name}"]`);
+    const field = $(`#bk${capitalize(name)}`);
+
+    if (errorEl) errorEl.hidden = !hasError;
+    if (field) {
+      field.closest(".field")?.classList.toggle("has-error", hasError);
+      field.setAttribute("aria-invalid", String(hasError));
+    }
+  }
+
+  function clearFieldErrors() {
+    ["name", "phone", "email"].forEach((name) => setFieldError(name, false));
+  }
+
+  ["name", "phone", "email"].forEach((name) => {
+    const field = $(`#bk${capitalize(name)}`);
+    if (field) {
+      field.addEventListener("input", () => setFieldError(name, false));
+    }
+  });
+
+  function prefillClient() {
+    const client = readStore(STORE.client, null);
+    if (!client || typeof client !== "object") return;
+
+    const nameField = $("#bkName");
+    const phoneField = $("#bkPhone");
+    const emailField = $("#bkEmail");
+
+    if (nameField && client.name) nameField.value = client.name;
+    if (phoneField && client.phone) phoneField.value = client.phone;
+    if (emailField && client.email) emailField.value = client.email;
+  }
+
+  function generateCode() {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    let code = "";
+
+    do {
+      code = "MUA-";
+      for (let i = 0; i < 4; i += 1) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+    } while (appointments.some((item) => item.id === code));
+
+    return code;
+  }
+
+  function bookingMessage(appointment) {
+    return `Hola MUA ✦ Confirmo mi cita:\n\n• Servicio: ${appointment.service}\n• Fecha: ${formatLongDate(appointment.date)}\n• Hora: ${appointment.time}\n• Nombre: ${appointment.name}\n• Código: ${appointment.id}\n\n¡Gracias!`;
+  }
+
+  function showBookingSuccess(appointment) {
+    if (!bookingSuccess || !bookingForm) return;
+
+    const codeEl = $("#successCode");
+    const detailsEl = $("#successDetails");
+    const waLink = $("#waConfirm");
+
+    if (codeEl) codeEl.textContent = appointment.id;
+
+    if (detailsEl) {
+      detailsEl.innerHTML = `
+        <div><span>Servicio</span><b>${escapeHTML(appointment.service)}</b></div>
+        <div><span>Fecha</span><b>${escapeHTML(formatLongDate(appointment.date))}</b></div>
+        <div><span>Hora</span><b>${escapeHTML(appointment.time)}</b></div>
+        <div><span>Duración</span><b>${appointment.duration} min</b></div>
+        <div><span>Nombre</span><b>${escapeHTML(appointment.name)}</b></div>`;
+    }
+
+    if (waLink) {
+      waLink.href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(bookingMessage(appointment))}`;
+    }
+
+    bookingForm.hidden = true;
+    bookingSuccess.hidden = false;
+
+    progressItems.forEach((item) => {
+      item.classList.remove("is-active");
+      item.classList.add("is-done");
+    });
+
+    if (window.innerWidth < 1024 && bookingSuccess.scrollIntoView) {
+      bookingSuccess.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }
+
+  if (bookingForm) {
+    bookingForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (booking.step !== 3) return;
+
+      const nameField = $("#bkName");
+      const phoneField = $("#bkPhone");
+      const emailField = $("#bkEmail");
+      const notesField = $("#bkNotes");
+
+      const name = nameField ? nameField.value.trim() : "";
+      const phone = phoneField ? phoneField.value.trim() : "";
+      const email = emailField ? emailField.value.trim() : "";
+      const notes = notesField ? notesField.value.trim() : "";
+      const digits = phone.replace(/\D/g, "");
+
+      let valid = true;
+      clearFieldErrors();
+
+      if (name.length < 3) {
+        setFieldError("name", true);
+        valid = false;
+      }
+
+      if (digits.length < 10) {
+        setFieldError("phone", true);
+        valid = false;
+      }
+
+      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setFieldError("email", true);
+        valid = false;
+      }
+
+      if (!valid) {
+        const firstError = $(".field.has-error input, .field.has-error textarea");
+        if (firstError) firstError.focus({ preventScroll: false });
+        return;
+      }
+
+      if (!booking.service || !booking.date || !booking.time) {
+        setStep(!booking.service ? 1 : 2);
+        return;
+      }
+
+      if (isSlotTaken(booking.date, booking.time)) {
+        booking.time = null;
+        setStep(2);
+        showToast("Ese horario acaba de ocuparse. Elige otro, por favor.");
+        return;
+      }
+
+      const appointment = {
+        id: generateCode(),
+        service: booking.service,
+        price: booking.price,
+        duration: booking.duration || 60,
+        date: booking.date,
+        time: booking.time,
+        name,
+        phone,
+        email,
+        notes,
+        createdAt: new Date().toISOString()
+      };
+
+      appointments.push(appointment);
+      writeStore(STORE.appointments, appointments);
+      writeStore(STORE.client, { name, phone, email });
+
+      lastAppointment = appointment;
+      showBookingSuccess(appointment);
+      updateNextSlot();
+      renderCalendar();
+      renderSlots();
+      showToast("Cita reservada ✦ Revisa tu código.");
+    });
+  }
+
+  const bookAgain = $("#bookAgain");
+  if (bookAgain) {
+    bookAgain.addEventListener("click", () => {
+      if (bookingForm) bookingForm.reset();
+      if (bookingSuccess) bookingSuccess.hidden = true;
+      if (bookingForm) bookingForm.hidden = false;
+
+      serviceOptions.forEach((button) => {
+        button.classList.remove("is-selected");
+        button.setAttribute("aria-pressed", "false");
+      });
+
+      booking.service = null;
+      booking.price = 0;
+      booking.duration = 0;
+      booking.date = null;
+      booking.time = null;
+      lastAppointment = null;
+
+      clearFieldErrors();
+      hideAllHints();
+      prefillClient();
+
+      calCursor = new Date();
+      calCursor = new Date(calCursor.getFullYear(), calCursor.getMonth(), 1);
+      renderCalendar();
+      renderSlots();
+      setStep(1);
+
+      if (bookingCard && bookingCard.scrollIntoView) {
+        bookingCard.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    });
+  }
+
+  /* ---------- Añadir al calendario (.ics) ---------- */
+  function toICSDate(dateObj) {
+    return `${dateObj.getFullYear()}${pad(dateObj.getMonth() + 1)}${pad(dateObj.getDate())}T${pad(dateObj.getHours())}${pad(dateObj.getMinutes())}00`;
+  }
+
+  const icsBtn = $("#icsBtn");
+  if (icsBtn) {
+    icsBtn.addEventListener("click", () => {
+      if (!lastAppointment) return;
+
+      const start = slotToDate(lastAppointment.date, lastAppointment.time);
+      const end = new Date(start.getTime() + (lastAppointment.duration || 60) * 60000);
+      const stamp = new Date().toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+
+      const ics = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//MUA Estudio de Belleza//ES",
+        "CALSCALE:GREGORIAN",
+        "BEGIN:VEVENT",
+        `UID:${lastAppointment.id}@muamakeup`,
+        `DTSTAMP:${stamp}`,
+        `DTSTART:${toICSDate(start)}`,
+        `DTEND:${toICSDate(end)}`,
+        `SUMMARY:Cita en MUA — ${lastAppointment.service}`,
+        "LOCATION:Pimentel, Provincia Duarte, República Dominicana",
+        `DESCRIPTION:Código de reserva: ${lastAppointment.id}`,
+        "END:VEVENT",
+        "END:VCALENDAR"
+      ].join("\r\n");
+
+      const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `mua-${lastAppointment.id}.ics`;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+  }
+
+  /* ---------- Toast ---------- */
+  let toastTimer = null;
+  function showToast(message) {
+    const toast = $("#toast");
+    if (!toast) return;
+
+    toast.textContent = message;
+    toast.classList.add("is-visible");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("is-visible"), 3200);
+  }
+
+  /* ---------- Imágenes: fallback elegante ---------- */
+  $$("img").forEach((img) => {
+    const handleError = () => {
+      const wrapper = img.closest(".hero-frame, .about-img, .g-item");
+      if (wrapper) wrapper.classList.add("img-fallback");
+      img.style.visibility = "hidden";
+    };
+
+    img.addEventListener("error", handleError);
+    if (img.complete && img.naturalWidth === 0) handleError();
+  });
+
+  /* ---------- Newsletter ---------- */
+  const newsletter = $("#newsletter");
+  if (newsletter) {
+    newsletter.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const input = $("#newsEmail");
+      const value = input ? input.value.trim() : "";
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+        showToast("Escribe un email válido para suscribirte.");
+        if (input) input.focus();
+        return;
+      }
+
+      showToast("¡Listo! Te escribiremos pronto ✦");
+      newsletter.reset();
+    });
+  }
+
+  /* ---------- Init ---------- */
+  const yearEl = $("#year");
+  if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+  prefillClient();
+  renderProducts("todo");
+  renderCart();
+  renderCalendar();
+  renderSlots();
+  updateNextSlot();
+  setStep(1);
+})();
+  </script>
+</body>
+</html>
